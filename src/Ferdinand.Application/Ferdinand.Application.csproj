@@ -1,0 +1,16 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <ItemGroup>
+    <ProjectReference Include="..\Ferdinand.Domain.Primitives\Ferdinand.Domain.Primitives.csproj"/>
+    <ProjectReference Include="..\Ferdinand.Domain\Ferdinand.Domain.csproj"/>
+    <ProjectReference Include="..\Ferdinand.Data\Ferdinand.Data.csproj"/>
+  </ItemGroup>
+  <ItemGroup>
+    <PackageReference Include="MediatR" Version="11.1.0"/>
+    <PackageReference Include="Npgsql.EntityFrameworkCore.PostgreSQL" Version="7.0.1"/>
+  </ItemGroup>
+  <PropertyGroup>
+    <TargetFramework>net7.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+  </PropertyGroup>
+</Project>
