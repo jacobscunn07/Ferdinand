@@ -5,7 +5,12 @@ services:
     image: ferdinand:latest
     build: 
       context: .
-      target: web
+    environment:
+      - ASPNETCORE_URLS=http://+:5000
+      - ASPNETCORE_ENVIRONMENT=Development
+      - APP=Ferdinand.Web
+    ports:
+      - "5000:5000"
     depends_on:
       postgres:
         condition: service_healthy
@@ -14,7 +19,9 @@ services:
     image: ferdinand:latest
     build: 
       context: .
-      target: migrations
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+      - APP=Ferdinand.Data.Migrations
     depends_on:
       postgres:
         condition: service_healthy

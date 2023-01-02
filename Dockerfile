@@ -19,23 +19,11 @@ RUN dotnet build --no-restore -c "Release" \
     && dotnet publish --no-build -c "Release" -o /publish/Ferdinand.Data.Migrations /build/src/Ferdinand.Data.Migrations/ \
     && dotnet publish --no-build -c "Release" -o /publish/Ferdinand.Web /build/src/Ferdinand.Web/
 
-# Publish
 FROM mcr.microsoft.com/dotnet/aspnet:7.0.1-alpine3.17 AS publish
 
 WORKDIR /app
 
 COPY --from=build /publish .
+COPY --from=build /build/run.sh .
 
-# Migrations
-FROM publish AS migrations
-
-WORKDIR /app/Ferdinand.Data.Migrations
-
-ENTRYPOINT [ "dotnet", "Ferdinand.Data.Migrations.dll" ]
-
-# Web
-FROM publish AS web
-
-WORKDIR /app/Ferdinand.Web
-
-ENTRYPOINT [ "dotnet", "Ferdinand.Web.dll" ]
+ENTRYPOINT [ "/bin/sh", "run.sh" ]
