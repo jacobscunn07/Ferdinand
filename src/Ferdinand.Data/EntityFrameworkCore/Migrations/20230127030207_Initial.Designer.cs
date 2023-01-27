@@ -12,7 +12,7 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace Ferdinand.Data.EntityFrameworkCore.Migrations
 {
     [DbContext(typeof(FerdinandDbContext))]
-    [Migration("20221223162702_Initial")]
+    [Migration("20230127030207_Initial")]
     partial class Initial
     {
         /// <inheritdoc />
@@ -32,7 +32,8 @@ namespace Ferdinand.Data.EntityFrameworkCore.Migrations
 
                     b.Property<string>("Description")
                         .IsRequired()
-                        .HasColumnType("text");
+                        .HasMaxLength(100)
+                        .HasColumnType("character varying(100)");
 
                     b.Property<string>("HexValue")
                         .IsRequired()

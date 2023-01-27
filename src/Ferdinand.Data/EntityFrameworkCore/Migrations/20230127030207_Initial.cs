@@ -18,7 +18,7 @@ namespace Ferdinand.Data.EntityFrameworkCore.Migrations
                     Key = table.Column<Guid>(type: "uuid", nullable: false),
                     Tenant = table.Column<string>(type: "character varying(50)", maxLength: 50, nullable: false),
                     HexValue = table.Column<string>(type: "character varying(6)", maxLength: 6, nullable: false),
-                    Description = table.Column<string>(type: "text", nullable: false)
+                    Description = table.Column<string>(type: "character varying(100)", maxLength: 100, nullable: false)
                 },
                 constraints: table =>
                 {

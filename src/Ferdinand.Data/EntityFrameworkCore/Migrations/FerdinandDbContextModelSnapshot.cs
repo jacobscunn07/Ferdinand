@@ -29,7 +29,8 @@ namespace Ferdinand.Data.EntityFrameworkCore.Migrations
 
                     b.Property<string>("Description")
                         .IsRequired()
-                        .HasColumnType("text");
+                        .HasMaxLength(100)
+                        .HasColumnType("character varying(100)");
 
                     b.Property<string>("HexValue")
                         .IsRequired()
