@@ -3,7 +3,7 @@ using Ferdinand.Domain.Primitives;
 
 namespace Ferdinand.Domain.Repositories;
 
-public interface IColorRepository : IRepository<Color, Guid>
+public interface IColorRepository : IRepository<Color, ColorId>
 {
 
 }

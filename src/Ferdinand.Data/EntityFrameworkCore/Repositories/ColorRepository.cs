@@ -5,17 +5,17 @@ namespace Ferdinand.Data.EntityFrameworkCore.Repositories;
 
 public sealed class ColorRepository : IColorRepository
 {
-    public Task<int> Delete(Guid key)
+    public Task<int> Delete(ColorId key)
     {
         throw new NotImplementedException();
     }
 
-    public Task<bool> Exists(Guid key)
+    public Task<bool> Exists(ColorId key)
     {
         throw new NotImplementedException();
     }
 
-    public Task<Color> Get(Guid key)
+    public Task<Color> Get(ColorId key)
     {
         throw new NotImplementedException();
     }

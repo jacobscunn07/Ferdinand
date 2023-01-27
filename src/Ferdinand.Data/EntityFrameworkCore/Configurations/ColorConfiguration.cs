@@ -13,7 +13,11 @@ public sealed class ColorConfiguration : IEntityTypeConfiguration<Color>
         builder.HasKey(x => x.Key);
 
         builder.Property(x => x.Key)
-        .ValueGeneratedNever();
+        .ValueGeneratedNever()
+        .HasConversion(
+            id => id.Value,
+            value => ColorId.Create(value)
+        );
 
         builder.Property(x => x.Tenant)
         .IsRequired()
@@ -22,5 +26,8 @@ public sealed class ColorConfiguration : IEntityTypeConfiguration<Color>
         builder.Property(x => x.HexValue)
         .IsRequired()
         .HasMaxLength(6);
+
+        builder.Property(x => x.Description)
+        .HasMaxLength(100);
     }
 }

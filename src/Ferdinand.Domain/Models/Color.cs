@@ -4,7 +4,7 @@ using Throw;
 
 namespace Ferdinand.Domain.Models;
 
-public sealed class Color : AggregateRoot<Guid>
+public sealed class Color : AggregateRoot<ColorId>
 {
     private Color() { } 
     
