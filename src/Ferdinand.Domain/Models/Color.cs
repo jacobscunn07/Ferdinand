@@ -8,16 +8,12 @@ public sealed class Color : AggregateRoot<ColorId>
 {
     private Color() { } 
     
-    public string Tenant { get; private set; }
+    public Tenant Tenant { get; private set; }
     public string HexValue { get; private set; } 
     public string Description { get; private set; }
 
-    public static Color FromHexValue(string tenant, string hexValue, string description = "")
+    public static Color FromHexValue(Tenant tenant, string hexValue, string description = "")
     {
-        tenant.Throw(() => new DomainException())
-            .IfEmpty()
-            .IfWhiteSpace();
-
         hexValue.Throw(() => new DomainException())
             .IfEmpty()
             .IfWhiteSpace()

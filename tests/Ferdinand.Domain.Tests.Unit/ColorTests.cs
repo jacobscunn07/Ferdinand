@@ -10,7 +10,7 @@ public class ColorTests
     public void FromHexValue_ShouldCreateColor_WhenPassedValidInputs()
     {
         // Arrange
-        var tenant = "tenant 1";
+        var tenant = Tenant.Create("tenant 1");
         var hexValue = "FFFFFF";
         var description = "white";
 
@@ -36,7 +36,7 @@ public class ColorTests
     )
     {
         // Arrange
-        var sut = () => Color.FromHexValue(tenant, hexValue, description);
+        var sut = () => Color.FromHexValue(Tenant.Create(tenant), hexValue, description);
 
         // Act
         // Assert
