@@ -6,7 +6,6 @@ public sealed record Tenant : IValueObject
 {
     private Tenant(string value)
     {
-
         value.Throw(() => new DomainException())
             .IfEmpty()
             .IfWhiteSpace();

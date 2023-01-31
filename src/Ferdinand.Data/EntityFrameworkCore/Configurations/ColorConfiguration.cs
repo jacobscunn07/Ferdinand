@@ -20,6 +20,10 @@ public sealed class ColorConfiguration : IEntityTypeConfiguration<Color>
         );
 
         builder.Property(x => x.Tenant)
+        .HasConversion(
+            id => id.Value,
+            value => Tenant.Create(value)
+        )
         .IsRequired()
         .HasMaxLength(50);
 
