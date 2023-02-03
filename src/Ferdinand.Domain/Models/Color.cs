@@ -22,6 +22,7 @@ public sealed class Color : AggregateRoot<ColorId>
 
         return new Color {
             Tenant = tenant,
+            Key = ColorId.CreateUnique(),
             HexValue = hexValue,
             Description = description
         };
