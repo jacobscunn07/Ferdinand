@@ -23,6 +23,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Ferdinand.Web", "src\Ferdin
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Ferdinand.Data.Tests.Integration", "tests\Ferdinand.Data.Tests.Integration\Ferdinand.Data.Tests.Integration.csproj", "{F359D7F1-F371-4647-9FBC-551E09B5C169}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Ferdinand.Application.Tests.Integration", "tests\Ferdinand.Application.Tests.Integration\Ferdinand.Application.Tests.Integration.csproj", "{1D14966F-DAB3-446D-9C1C-DB2EDE04F0D0}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -64,6 +66,10 @@ Global
 		{F359D7F1-F371-4647-9FBC-551E09B5C169}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{F359D7F1-F371-4647-9FBC-551E09B5C169}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{F359D7F1-F371-4647-9FBC-551E09B5C169}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1D14966F-DAB3-446D-9C1C-DB2EDE04F0D0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1D14966F-DAB3-446D-9C1C-DB2EDE04F0D0}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1D14966F-DAB3-446D-9C1C-DB2EDE04F0D0}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1D14966F-DAB3-446D-9C1C-DB2EDE04F0D0}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
 		{8C690961-BDDF-4A6E-BF67-7004FBF40788} = {A882DCCA-11E7-48E8-B629-B30C78E88AF2}
@@ -74,5 +80,6 @@ Global
 		{0305F029-5D0C-47AF-A1D5-13620FED7492} = {160C3F30-1A46-421C-AB27-F6BB6C6FD74F}
 		{25F4BBDB-A091-4BAB-B4D2-2C9E8AA0D8E8} = {A882DCCA-11E7-48E8-B629-B30C78E88AF2}
 		{F359D7F1-F371-4647-9FBC-551E09B5C169} = {160C3F30-1A46-421C-AB27-F6BB6C6FD74F}
+		{1D14966F-DAB3-446D-9C1C-DB2EDE04F0D0} = {160C3F30-1A46-421C-AB27-F6BB6C6FD74F}
 	EndGlobalSection
 EndGlobal
