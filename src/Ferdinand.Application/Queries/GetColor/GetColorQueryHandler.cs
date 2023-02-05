@@ -15,7 +15,7 @@ public class GetColorQueryHandler : IRequestHandler<GetColorQuery, GetColorQuery
     public async Task<GetColorQueryResult> Handle(GetColorQuery request, CancellationToken cancellationToken)
     {
         var color = await _colors.GetByKey(ColorId.Create(request.Key));
-        var colorResult = new Color(color.Key.Value, color.Description, color.HexValue);
+        var colorResult = new Color(color.Key.Value, color.HexValue, color.Description);
 
         return new GetColorQueryResult(colorResult);
     }
