@@ -3,6 +3,7 @@ using Ferdinand.Domain.Models;
 using Ferdinand.Domain.Repositories;
 using FluentAssertions;
 using Microsoft.Extensions.DependencyInjection;
+using Throw;
 using Xunit;
 
 namespace Ferdinand.Data.Tests.Integration.EntityFrameworkCore;
@@ -33,7 +34,7 @@ public class ColorRepositoryTests : BaseTest
     }
     
     [Fact]
-    public async Task GetByKey_ShouldNotReturnColor_WhenNoKeyExists()
+    public Task GetByKey_ShouldNotReturnColor_WhenNoKeyExists()
     {
         // Arrange
         using var scope = _host.Services.CreateScope();
@@ -41,10 +42,11 @@ public class ColorRepositoryTests : BaseTest
         var key = ColorId.CreateUnique();
 
         // Act
-        var colorFromDb = await sut.GetByKey(key);
+        var action = async () => await sut.GetByKey(key);
 
         // Assert
-        colorFromDb.Should().BeNull();
+        action.Should().Throw();
+        return Task.CompletedTask;
     }
 
     [Fact]

@@ -6,7 +6,7 @@ public interface IRepository<TAggregate, in TKey>
     where TAggregate : class, IAggregateRoot<TKey>
 {
     Task<bool> Exists(TKey key);
-    Task<TAggregate?> GetByKey(TKey key);
+    Task<TAggregate> GetByKey(TKey key);
     IEnumerable<TAggregate> Find(Expression<Func<TAggregate, bool>> expression);
     Task Add(TAggregate aggregate);
     Task AddRange(IEnumerable<TAggregate> aggregates);
