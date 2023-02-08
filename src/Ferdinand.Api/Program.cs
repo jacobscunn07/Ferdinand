@@ -1,6 +1,18 @@
+using Serilog;
+using Serilog.Formatting.Compact;
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
+
+builder.Host.UseSerilog((_, _, configuration) =>
+{
+    configuration
+        .Enrich.WithMachineName()
+        .Enrich.WithEnvironmentName()
+        .Enrich.WithDemystifiedStackTraces()
+        .WriteTo.Console(new RenderedCompactJsonFormatter());
+});
 
 builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
