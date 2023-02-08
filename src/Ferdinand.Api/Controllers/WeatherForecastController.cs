@@ -1,6 +1,6 @@
 using Microsoft.AspNetCore.Mvc;
 
-namespace Ferdinand.Web.Controllers;
+namespace Ferdinand.Api.Controllers;
 
 [ApiController]
 [Route("[controller]")]

@@ -1,4 +1,4 @@
-namespace Ferdinand.Web;
+namespace Ferdinand.Api;
 
 public class WeatherForecast
 {
