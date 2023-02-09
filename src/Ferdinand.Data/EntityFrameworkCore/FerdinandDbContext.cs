@@ -1,3 +1,4 @@
+using Ferdinand.Data.Outbox;
 using Ferdinand.Domain.Models;
 using Microsoft.EntityFrameworkCore;
 
@@ -10,6 +11,8 @@ public sealed class FerdinandDbContext : DbContext
     }
 
     public DbSet<Color> Colors { get; set; } = null!;
+
+    public DbSet<OutboxMessage> OutboxMessages { get; set; } = null!;
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
