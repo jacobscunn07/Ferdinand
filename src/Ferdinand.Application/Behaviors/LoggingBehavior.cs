@@ -19,7 +19,7 @@ where TRequest : IRequest<TResponse>
         {
             var response = await next();
 
-            _logger.LogDebug("APP: {RequestType} => OK", typeof(TRequest).Name);
+            _logger.LogInformation("APP: {RequestType} => OK", typeof(TRequest).Name);
 
             return response;
         }
