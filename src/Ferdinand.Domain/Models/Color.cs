@@ -1,4 +1,5 @@
 using System.Text.RegularExpressions;
+using Ferdinand.Domain.Events;
 using Ferdinand.Domain.Primitives;
 using Throw;
 
@@ -20,11 +21,15 @@ public sealed class Color : AggregateRoot<ColorId>
             .IfLengthNotEquals(6)
             .IfNotMatches(new Regex("[0-9a-fA-F]{6}"));
 
-        return new Color {
+        var color = new Color {
             Tenant = tenant,
             Key = ColorId.CreateUnique(),
             HexValue = hexValue,
             Description = description
         };
+
+        color.RaiseEvent(new ColorAdded(color.Tenant.Value, color.HexValue));
+
+        return color;
     }
 }

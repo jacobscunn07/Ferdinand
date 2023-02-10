@@ -1,5 +1,7 @@
 using Ferdinand.Domain.Primitives;
 
+namespace Ferdinand.Domain.Models;
+
 public record ColorId : IValueObject
 {
     private ColorId(Guid value)

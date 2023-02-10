@@ -1,10 +1,7 @@
 namespace Ferdinand.Domain.Primitives;
 
-public interface IAggregateRoot<TKey> : IEntity<TKey>
+public interface IAggregateRoot<out TKey> : IEntity<TKey>, IHandleDomainEvents
 {
-    IReadOnlyList<IDomainEvent> Events { get; }
-
-    void RaiseEvent(IDomainEvent evt);
 }
 
 // public interface IAggregateRoot<TKey, TTenant> : IAggregateRoot<TKey>

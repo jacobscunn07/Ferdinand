@@ -1,6 +1,6 @@
 namespace Ferdinand.Domain.Primitives;
 
-public interface IEntity<TKey>
+public interface IEntity<out TKey>
 {
     TKey Key { get; }
 }

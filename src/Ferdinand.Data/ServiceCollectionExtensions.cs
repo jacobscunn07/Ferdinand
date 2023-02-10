@@ -17,9 +17,10 @@ public static class ServiceCollectionExtensions
             .AddDbContext<FerdinandDbContext>((sp, opts) =>
             {
                 var convertDomainEventsToOutboxMessagesInterceptor =
-                    sp.GetRequiredService<ConvertDomainEventsToOutboxMessagesInterceptor>();
+                    sp.GetService<ConvertDomainEventsToOutboxMessagesInterceptor>();
 
-                opts.UseNpgsql(configuration.GetConnectionString("Postgres"))
+                var _connectionString = configuration.GetConnectionString("Postgres");
+                opts.UseNpgsql(_connectionString)
                     .AddInterceptors(convertDomainEventsToOutboxMessagesInterceptor);
             })
             .AddScoped<IColorRepository, ColorRepository>();

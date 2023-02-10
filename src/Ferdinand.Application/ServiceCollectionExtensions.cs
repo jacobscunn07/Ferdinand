@@ -11,7 +11,7 @@ public static class ServiceCollectionExtensions
         services
             .AddMediatR(typeof(AssemblyMarker))
             .AddTransient(typeof(IPipelineBehavior<,>), typeof(LoggingBehavior<,>))
-            // .AddTransient(typeof(IPipelineBehavior<,>), typeof(TransactionBehavior<,>))
+            .AddTransient(typeof(IPipelineBehavior<,>), typeof(TransactionBehavior<,>))
             ;
 
         return services;

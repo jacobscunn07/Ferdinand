@@ -8,12 +8,14 @@ services:
     environment:
       - ASPNETCORE_URLS=http://+:5000
       - ASPNETCORE_ENVIRONMENT=Development
-      - APP=Ferdinand.Web
+      - APP=Ferdinand.Api
     ports:
       - "5000:5000"
     depends_on:
       postgres:
         condition: service_healthy
+      migrations:
+        condition: service_completed_successfully
   migrations:
     container_name: migrations
     image: ferdinand:latest
@@ -38,3 +40,5 @@ services:
       interval: 10s
       timeout: 5s
       retries: 5
+    volumes:
+      - ${FERDINAND_DOCKER_VOLUMES_ROOT}/data/postgres:/var/lib/postgresql/data

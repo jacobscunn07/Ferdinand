@@ -1,7 +1,7 @@
-using System.Text.Json;
 using Ferdinand.Data.Outbox;
 using Ferdinand.Domain.Primitives;
 using Microsoft.EntityFrameworkCore.Diagnostics;
+using Newtonsoft.Json;
 
 namespace Ferdinand.Data.EntityFrameworkCore.Interceptors;
 
@@ -10,12 +10,11 @@ public class ConvertDomainEventsToOutboxMessagesInterceptor : SaveChangesInterce
     public override ValueTask<InterceptionResult<int>> SavingChangesAsync(DbContextEventData eventData, InterceptionResult<int> result,
         CancellationToken cancellationToken = new CancellationToken())
     {
-        var ctx = eventData.Context;
-
-        if (ctx is null) return base.SavingChangesAsync(eventData, result, cancellationToken);
+        if (eventData.Context is not FerdinandDbContext ctx)
+            return base.SavingChangesAsync(eventData, result, cancellationToken);
 
         var outboxMessages = ctx.ChangeTracker
-            .Entries<AggregateRoot<IValueObject>>()
+            .Entries<IHandleDomainEvents>()
             .Select(x => x.Entity)
             .SelectMany(x => x.Events)
             .Select(x => new OutboxMessage()
@@ -23,12 +22,15 @@ public class ConvertDomainEventsToOutboxMessagesInterceptor : SaveChangesInterce
                     Id = Guid.NewGuid(),
                     CreatedUtc = DateTime.UtcNow,
                     Type = x.GetType().Name,
-                    Content = JsonSerializer.Serialize(x)
+                    Content = JsonConvert.SerializeObject(x, new JsonSerializerSettings()
+                    {
+                        TypeNameHandling = TypeNameHandling.All
+                    })
                 }
             )
             .ToList();
         
-        ctx.Set<OutboxMessage>().AddRange(outboxMessages);
+        ctx.OutboxMessages.AddRange(outboxMessages);
         
         return base.SavingChangesAsync(eventData, result, cancellationToken);
     }

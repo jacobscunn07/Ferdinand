@@ -1,3 +1,4 @@
+using Ferdinand.Domain.Models;
 using Ferdinand.Domain.Repositories;
 using MediatR;
 

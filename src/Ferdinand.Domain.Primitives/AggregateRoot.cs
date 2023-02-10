@@ -1,6 +1,7 @@
 namespace Ferdinand.Domain.Primitives;
 
 public abstract class AggregateRoot<TKey> : Entity<TKey>, IAggregateRoot<TKey>
+where TKey : IValueObject
 {
     private IList<IDomainEvent> _events;
 
