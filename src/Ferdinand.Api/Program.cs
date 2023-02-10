@@ -1,5 +1,6 @@
 using Ferdinand.Application;
 using Ferdinand.Data;
+using Microsoft.AspNetCore.Mvc.Versioning;
 using Serilog;
 using Serilog.Formatting.Compact;
 
@@ -23,6 +24,25 @@ builder.Host.UseSerilog((hostContext, _, configuration) =>
         configuration.WriteTo.Console();
     }
 });
+
+builder.Services.AddApiVersioning(o =>
+{
+    o.AssumeDefaultVersionWhenUnspecified = true;
+    o.DefaultApiVersion = new Microsoft.AspNetCore.Mvc.ApiVersion(1, 0);
+    o.ReportApiVersions = true;
+    o.ApiVersionReader = ApiVersionReader.Combine(
+        new QueryStringApiVersionReader("api-version"),
+        new HeaderApiVersionReader("X-Api-Version"),
+        new MediaTypeApiVersionReader("api-version"));
+
+});
+
+builder.Services.AddVersionedApiExplorer(
+    options =>
+    {
+        options.GroupNameFormat = "'v'VVV";
+        options.SubstituteApiVersionInUrl = true;
+    });
 
 builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle

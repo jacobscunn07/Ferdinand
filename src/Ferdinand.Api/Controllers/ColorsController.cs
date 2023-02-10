@@ -5,7 +5,8 @@ using Microsoft.AspNetCore.Mvc;
 namespace Ferdinand.Api.Controllers;
 
 [ApiController]
-[Route("api/{tenant}/[controller]")]
+[Route("api/v{apiVersion}/{tenant}/[controller]")]
+[ApiVersion("1.0")]
 public class ColorsController : ControllerBase
 {
     private readonly ILogger<ColorsController> _logger;
