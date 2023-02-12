@@ -14,8 +14,6 @@ jobs:
       - name: Run Unit Tests
         run: docker compose -f docker-compose.tests.yaml up csharp-unit
       - name: Run Integration Tests
-        run: |
-          TESTCONTAINERS_HOST_OVERRIDE=localhost \
-          docker compose -f docker-compose.tests.yaml up csharp-integration
+        run: docker compose -f docker-compose.tests.yaml run -e TESTCONTAINERS_HOST_OVERRIDE="" csharp-integration
       - name: Push Images
         run: echo "TBD"
