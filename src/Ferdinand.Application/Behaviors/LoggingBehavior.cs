@@ -19,12 +19,18 @@ where TRequest : IRequest<TResponse>
         {
             var response = await next();
 
-            _logger.LogInformation("APP: {RequestType} => OK", typeof(TRequest).Name);
+            _logger.LogDebug("APP: {RequestType} => OK", typeof(TRequest).Name);
 
             return response;
         }
-        catch
+        catch(Exception e)
         {
+            _logger.LogError(
+                e,
+                "APP: {RequestType} => ERROR: {ErrorMessage}",
+                typeof(TRequest).Name,
+                e.Message);
+
             throw;
         }
     }
