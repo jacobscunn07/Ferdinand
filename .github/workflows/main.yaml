@@ -1,0 +1,21 @@
+name: Build and Publish
+on:
+  push:
+    branches:
+      - main
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out repository code
+        uses: actions/checkout@v3
+      - name: Build Images
+        run: |
+          docker compose build
+          docker compose -f docker-compose.tests.yaml build
+      - name: Run Unit Tests
+        run: docker compose -f docker-compose.tests.yaml up csharp-unit
+      - name: Run Integration Tests
+        run: docker compose -f docker-compose.tests.yaml up csharp-integration
+      - name: Push Images
+        run: echo "TBD"
