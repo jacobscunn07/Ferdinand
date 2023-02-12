@@ -17,11 +17,19 @@ public class TransactionBehavior<TRequest, TResponse> : IPipelineBehavior<TReque
     {
         await using var tx = await _ctx.Database.BeginTransactionAsync(cancellationToken);
 
-        var result = await next();
+        try
+        {
+            var result = await next();
 
-        await _ctx.SaveChangesAsync(cancellationToken);
-        await tx.CommitAsync(cancellationToken);
-
-        return result;
+            await _ctx.SaveChangesAsync(cancellationToken);
+            await tx.CommitAsync(cancellationToken);
+            
+            return result;
+        }
+        catch
+        {
+            await tx.RollbackAsync(cancellationToken);
+            throw;
+        }
     }
 }
