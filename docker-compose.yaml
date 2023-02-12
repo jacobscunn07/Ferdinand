@@ -5,6 +5,7 @@ services:
     image: ferdinand:latest
     build: 
       context: .
+      target: release
     environment:
       - ASPNETCORE_URLS=http://+:5000
       - ASPNETCORE_ENVIRONMENT=Development
@@ -22,6 +23,7 @@ services:
     image: ferdinand:latest
     build: 
       context: .
+      target: release
     environment:
       - ASPNETCORE_ENVIRONMENT=Development
       - APP=Ferdinand.Data.Migrations
