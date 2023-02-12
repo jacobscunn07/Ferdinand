@@ -1,4 +1,5 @@
 using Ferdinand.Application.Behaviors;
+using FluentValidation;
 using MediatR;
 using Microsoft.Extensions.DependencyInjection;
 
@@ -11,8 +12,9 @@ public static class ServiceCollectionExtensions
         services
             .AddMediatR(typeof(AssemblyMarker))
             .AddTransient(typeof(IPipelineBehavior<,>), typeof(LoggingBehavior<,>))
+            .AddTransient(typeof(IPipelineBehavior<,>), typeof(ValidationBehavior<,>))
             .AddTransient(typeof(IPipelineBehavior<,>), typeof(TransactionBehavior<,>))
-            ;
+            .AddValidatorsFromAssembly(typeof(AssemblyMarker).Assembly);
 
         return services;
     }
