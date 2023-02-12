@@ -15,7 +15,7 @@ services:
       context: .
       target: tests
     environment:
-      - TESTCONTAINERS_HOST_OVERRIDE=host.docker.internal
+#      - TESTCONTAINERS_HOST_OVERRIDE=host.docker.internal
       - TESTCONTAINERS_RYUK_DISABLED=true
       - TEST_TYPE=Data.Tests.Integration
     volumes:
