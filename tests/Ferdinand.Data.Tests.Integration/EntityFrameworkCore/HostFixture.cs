@@ -19,7 +19,7 @@ public class HostFixture : IAsyncLifetime
 
     public HostFixture()
     {
-        _dbContainer = new TestcontainersBuilder<PostgreSqlTestcontainer>()
+        _dbContainer = new ContainerBuilder<PostgreSqlTestcontainer>()
             .WithDatabase(new PostgreSqlTestcontainerConfiguration
             {
                 Database = "ferdinand_data_test",
