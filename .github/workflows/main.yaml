@@ -12,7 +12,7 @@ jobs:
       - name: Build Images
         run: docker compose -f docker-compose.yaml -f docker-compose.tests.yaml build
       - name: Run Unit Tests
-        run: docker compose -f docker-compose.tests.yaml up csharp-unit
+        run: docker compose -f docker-compose.tests.yaml run csharp-unit
       - name: Run Integration Tests
         run: docker compose -f docker-compose.tests.yaml run -e TESTCONTAINERS_HOST_OVERRIDE="" csharp-integration
       - name: Push Images
