@@ -29,7 +29,7 @@ public class ValidationBehavior<TRequest, TResponse> : IPipelineBehavior<TReques
         
         if (errors.Any())
         {
-            throw new ValidationException(errors);
+            throw new ValidationException("Request failed validation. See errors for additional details.", errors);
         }
 
         return await next();

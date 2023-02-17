@@ -1,3 +1,4 @@
+using Ferdinand.Api;
 using Ferdinand.Application;
 using Ferdinand.Data;
 using Microsoft.AspNetCore.Mvc.Versioning;
@@ -51,7 +52,8 @@ builder.Services.AddSwaggerGen();
 
 builder.Services
     .AddDataServices(builder.Configuration)
-    .AddApplicationServices();
+    .AddApplicationServices()
+    .AddMiddleware();
 
 var app = builder.Build();
 
@@ -61,6 +63,8 @@ if (app.Environment.IsDevelopment())
     app.UseSwagger();
     app.UseSwaggerUI();
 }
+
+app.UseExceptionHandlingMiddleware();
 
 app.UseHttpsRedirection();
 
