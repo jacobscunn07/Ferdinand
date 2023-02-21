@@ -47,7 +47,7 @@ public class GetByKeyColorRepositoryTests
         // Arrange
         using var scope = _fixture.Host.Services.CreateScope();
         var sut = scope.ServiceProvider.GetRequiredService<IColorRepository>();
-        var key = ColorId.CreateUnique();
+        var key = ColorKey.CreateUnique();
 
         // Act
         var action = async () => await sut.GetByKey(key);

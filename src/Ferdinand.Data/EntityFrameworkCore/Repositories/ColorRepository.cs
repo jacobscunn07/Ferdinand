@@ -15,7 +15,7 @@ public sealed class ColorRepository : IColorRepository
         _ctx = ctx;
     }
     
-    public async Task<bool> Exists(ColorId key)
+    public async Task<bool> Exists(ColorKey key)
     {
         return await _ctx.Colors.AnyAsync(x => x.Key.Equals(key));
     }
@@ -35,7 +35,7 @@ public sealed class ColorRepository : IColorRepository
         return _ctx.Colors.Where(expression);
     }
 
-    public async Task<Color> GetByKey(ColorId key)
+    public async Task<Color> GetByKey(ColorKey key)
     {
         var color = await _ctx.Colors.FindAsync(key);
 

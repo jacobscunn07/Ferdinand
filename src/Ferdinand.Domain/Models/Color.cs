@@ -5,7 +5,7 @@ using Throw;
 
 namespace Ferdinand.Domain.Models;
 
-public sealed class Color : AggregateRoot<ColorId>
+public sealed class Color : AggregateRoot<ColorKey>
 {
     private Color() { } 
     
@@ -23,7 +23,7 @@ public sealed class Color : AggregateRoot<ColorId>
 
         var color = new Color {
             Tenant = tenant,
-            Key = ColorId.CreateUnique(),
+            Key = ColorKey.CreateUnique(),
             HexValue = hexValue,
             Description = description
         };

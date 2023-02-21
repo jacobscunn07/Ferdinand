@@ -16,7 +16,7 @@ public sealed class ColorConfiguration : IEntityTypeConfiguration<Color>
         .ValueGeneratedNever()
         .HasConversion(
             id => id.Value,
-            value => ColorId.Create(value)
+            value => ColorKey.Create(value)
         );
 
         builder.Property(x => x.Tenant)

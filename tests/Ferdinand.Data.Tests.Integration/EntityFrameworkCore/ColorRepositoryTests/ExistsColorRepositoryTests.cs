@@ -45,7 +45,7 @@ public class ExistsColorRepositoryTests
         using var scope = _fixture.Host.Services.CreateScope();
         var sut = scope.ServiceProvider.GetRequiredService<IColorRepository>();
 
-        var colorKey = ColorId.CreateUnique();
+        var colorKey = ColorKey.CreateUnique();
 
         // Act
         var exists = await sut.Exists(colorKey);
