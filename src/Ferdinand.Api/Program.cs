@@ -3,28 +3,13 @@ using Ferdinand.Application;
 using Ferdinand.Data;
 using Microsoft.AspNetCore.Mvc.Versioning;
 using Serilog;
-using Serilog.Formatting.Compact;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 
-builder.Host.UseSerilog((hostContext, _, configuration) =>
-{
-    configuration
-        .Enrich.WithMachineName()
-        .Enrich.WithEnvironmentName()
-        .Enrich.WithDemystifiedStackTraces();
-
-    if (!hostContext.HostingEnvironment.IsDevelopment())
-    {
-        configuration.WriteTo.Console(new RenderedCompactJsonFormatter());
-    }
-    else
-    {
-        configuration.WriteTo.Console();
-    }
-});
+builder.Host.UseSerilog((context, configuration) =>
+    configuration.ReadFrom.Configuration(context.Configuration));
 
 builder.Services.AddApiVersioning(o =>
 {
