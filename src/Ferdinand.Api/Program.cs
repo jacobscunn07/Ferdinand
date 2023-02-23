@@ -1,6 +1,8 @@
 using Ferdinand.Api;
 using Ferdinand.Application;
 using Ferdinand.Data;
+using Ferdinand.Data.EntityFrameworkCore;
+using Microsoft.AspNetCore.Diagnostics.HealthChecks;
 using Microsoft.AspNetCore.Mvc.Versioning;
 using Serilog;
 
@@ -35,7 +37,20 @@ builder.Services
     .AddApplicationServices()
     .AddMiddleware();
 
+builder.Services.AddHealthChecks()
+    .AddDbContextCheck<FerdinandDbContext>();
+
 var app = builder.Build();
+
+app.MapHealthChecks("/readyz", new HealthCheckOptions
+{
+    Predicate = _ => true
+});
+
+app.MapHealthChecks("/livez", new HealthCheckOptions
+{
+    Predicate = _ => false
+});
 
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
