@@ -7,7 +7,17 @@ namespace Ferdinand.Domain.Models;
 
 public sealed class Color : AggregateRoot<ColorKey>
 {
-    private Color() { } 
+    private Color(
+        Tenant tenant,
+        ColorKey key,
+        string hexValue,
+        string description = "")
+    {
+        Tenant = tenant;
+        Key = key;
+        HexValue = hexValue;
+        Description = description;
+    }
     
     public Tenant Tenant { get; private set; }
     public string HexValue { get; private set; } 
@@ -19,14 +29,13 @@ public sealed class Color : AggregateRoot<ColorKey>
             .IfEmpty()
             .IfWhiteSpace()
             .IfLengthNotEquals(6)
-            .IfNotMatches(new Regex("[0-9a-fA-F]{6}"));
+            .IfNotMatches(new Regex(@"^[0-9a-fA-F]{6}$"));
 
-        var color = new Color {
-            Tenant = tenant,
-            Key = ColorKey.CreateUnique(),
-            HexValue = hexValue,
-            Description = description
-        };
+        var color = new Color(
+            tenant,
+            ColorKey.CreateUnique(),
+            hexValue,
+            description);
 
         color.RaiseEvent(new ColorAdded(color.Tenant.Value, color.HexValue));
 

@@ -1,9 +1,9 @@
 using Ferdinand.Application.Queries.GetColor;
 using Ferdinand.Data.EntityFrameworkCore;
+using Ferdinand.Domain.Models;
 using Ferdinand.Domain.Repositories;
 using FluentAssertions;
 using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Hosting;
 using Throw;
 using Xunit;
 using Color = Ferdinand.Domain.Models.Color;

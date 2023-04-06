@@ -1,6 +1,7 @@
-using Ferdinand.Domain;
 using Ferdinand.Domain.Primitives;
 using Throw;
+
+namespace Ferdinand.Domain.Models;
 
 public sealed record Tenant : IValueObject
 {
@@ -13,7 +14,7 @@ public sealed record Tenant : IValueObject
         Value = value;
     }
 
-    public string Value { get; set; }
+    public string Value { get; }
 
     public static Tenant Create(string value)
     {

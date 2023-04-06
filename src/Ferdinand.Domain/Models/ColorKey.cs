@@ -2,14 +2,17 @@ using Ferdinand.Domain.Primitives;
 
 namespace Ferdinand.Domain.Models;
 
-public record ColorKey : IValueObject
+public sealed record ColorKey(Guid Value) : IValueObject
 {
-    private ColorKey(Guid value)
+    public static ColorKey Create(string value)
     {
-        Value = value;
-    }
+        if (Guid.TryParse(value, out var guidOutput))
+        {
+            return Create(guidOutput);
+        }
 
-    public Guid Value { get; set; }
+        throw new DomainException();
+    }
 
     public static ColorKey Create(Guid value)
     {

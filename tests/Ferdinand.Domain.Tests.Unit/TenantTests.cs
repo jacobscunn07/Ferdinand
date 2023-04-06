@@ -1,3 +1,4 @@
+using Ferdinand.Domain.Models;
 using FluentAssertions;
 using Xunit;
 
