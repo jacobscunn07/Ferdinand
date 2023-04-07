@@ -26,7 +26,7 @@ public class FindColorRepositoryTests
         var sut = scope.ServiceProvider.GetRequiredService<IColorRepository>();
         
         var tenant = Tenant.Create("tenant");
-        var hexValue = "ABC123";
+        var hexValue = new Bogus.Randomizer().Hexadecimal(6, "");
         var color = Color.FromHexValue(tenant, hexValue);
         await sut.Add(color);
         await ctx.SaveChangesAsync();

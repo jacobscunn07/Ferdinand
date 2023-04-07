@@ -26,7 +26,7 @@ public class RemoveColorRepositoryTests
         var sut = scope.ServiceProvider.GetRequiredService<IColorRepository>();
         
         var tenant = Tenant.Create("tenant");
-        var hexValue = "000000";
+        var hexValue = new Bogus.Randomizer().Hexadecimal(6, "");
         var color = Color.FromHexValue(tenant, hexValue);
         await sut.Add(color);
         await ctx.SaveChangesAsync();

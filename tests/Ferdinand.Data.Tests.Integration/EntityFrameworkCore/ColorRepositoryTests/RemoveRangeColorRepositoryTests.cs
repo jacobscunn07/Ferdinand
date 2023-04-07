@@ -26,7 +26,7 @@ public class RemoveRangeColorRepositoryTests
         var sut = scope.ServiceProvider.GetRequiredService<IColorRepository>();
         
         var tenant = Tenant.Create("tenant");
-        var hexValue = "000000";
+        var hexValue = new Bogus.Randomizer().Hexadecimal(6, "");
         var color = Color.FromHexValue(tenant, hexValue);
         var colors = new List<Color> { color };
         await sut.AddRange(colors);

@@ -31,6 +31,8 @@ public sealed class ColorConfiguration : IEntityTypeConfiguration<Color>
         .IsRequired()
         .HasMaxLength(6);
 
+        builder.HasIndex(x => x.HexValue).IsUnique();
+
         builder.Property(x => x.Description)
         .HasMaxLength(100);
     }
