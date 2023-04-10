@@ -12,8 +12,8 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace Ferdinand.Data.EntityFrameworkCore.Migrations
 {
     [DbContext(typeof(FerdinandDbContext))]
-    [Migration("20230209025503_AddOutboxMessageTable")]
-    partial class AddOutboxMessageTable
+    [Migration("20230409215103_Initial")]
+    partial class Initial
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -71,6 +71,9 @@ namespace Ferdinand.Data.EntityFrameworkCore.Migrations
                         .HasColumnType("character varying(50)");
 
                     b.HasKey("Key");
+
+                    b.HasIndex("Tenant", "HexValue")
+                        .IsUnique();
 
                     b.ToTable("Color", (string)null);
                 });

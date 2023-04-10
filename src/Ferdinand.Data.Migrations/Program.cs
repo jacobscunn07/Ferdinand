@@ -1,5 +1,6 @@
 ﻿using Ferdinand.Application;
 using Ferdinand.Data;
+using Ferdinand.Data.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 
@@ -13,5 +14,8 @@ var host = Host
                 .AddApplicationServices();
        }
     ).Build();
+
+var ctx = host.Services.GetRequiredService<FerdinandDbContext>();
+await ctx.Database.EnsureCreatedAsync();
 
 await host.RunAsync();

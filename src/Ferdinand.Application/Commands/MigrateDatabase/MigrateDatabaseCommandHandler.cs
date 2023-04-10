@@ -19,7 +19,10 @@ public sealed class MigrateDatabaseCommandHandler : IRequestHandler<MigrateDatab
     public async Task<Unit> Handle(MigrateDatabaseCommand request, CancellationToken cancellationToken)
     {
         _logger.LogInformation("Executing migrations...");
-        await _dbContext.Database.MigrateAsync();
+        if (await _dbContext.Database.EnsureCreatedAsync(cancellationToken))
+        {
+            await _dbContext.Database.MigrateAsync(cancellationToken);
+        }
         _logger.LogInformation("Executing migrations completed...");
         
         return await Task.FromResult(Unit.Value);
