@@ -22,14 +22,17 @@ RUN dotnet build --no-restore -c "Release" \
     && dotnet publish --no-build -c "Release" -o /publish/Ferdinand.Api /build/src/Ferdinand.Api/
 
 FROM mcr.microsoft.com/dotnet/aspnet:7.0.1-alpine3.17 AS release
-
 WORKDIR /app
-
 COPY --from=build /publish .
 COPY --from=build /build/run.sh .
 
-ENTRYPOINT [ "/bin/sh", "run.sh" ]
+FROM release as release-api
+WORKDIR /app/Ferdinand.Api
+ENTRYPOINT [ "dotnet", "Ferdinand.Api.dll" ]
+
+FROM release as release-migrations
+WORKDIR /app/Ferdinand.Data.Migrations
+ENTRYPOINT [ "dotnet", "Ferdinand.Data.Migrations.dll" ]
 
 FROM build as tests
-
 ENTRYPOINT [ "/bin/sh", "run_tests.sh" ]

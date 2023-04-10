@@ -2,14 +2,13 @@ version: '3.9'
 services:
   web:
     container_name: web
-    image: ferdinand:latest
+    image: ferdinand:api
     build: 
       context: .
-      target: release
+      target: release-api
     environment:
       - ASPNETCORE_URLS=http://+:5000
       - ASPNETCORE_ENVIRONMENT=Development
-      - APP=Ferdinand.Api
       - CONNECTIONSTRINGS__POSTGRES
     ports:
       - "5000:5000"
@@ -20,13 +19,12 @@ services:
         condition: service_completed_successfully
   migrations:
     container_name: migrations
-    image: ferdinand:latest
+    image: ferdinand:migrations
     build: 
       context: .
-      target: release
+      target: release-migrations
     environment:
       - ASPNETCORE_ENVIRONMENT=Development
-      - APP=Ferdinand.Data.Migrations
     depends_on:
       postgres:
         condition: service_healthy
