@@ -12,6 +12,7 @@ COPY ./src/Ferdinand.Data/Ferdinand.Data.csproj ./src/Ferdinand.Data/Ferdinand.D
 COPY ./src/Ferdinand.Application/Ferdinand.Application.csproj ./src/Ferdinand.Application/Ferdinand.Application.csproj  
 COPY ./src/Ferdinand.Data.Migrations/Ferdinand.Data.Migrations.csproj ./src/Ferdinand.Data.Migrations/Ferdinand.Data.Migrations.csproj  
 COPY ./src/Ferdinand.Api/Ferdinand.Api.csproj ./src/Ferdinand.Api/Ferdinand.Api.csproj
+COPY ./src/Ferdinand.Jobs/Ferdinand.Jobs.csproj ./src/Ferdinand.Jobs/Ferdinand.Jobs.csproj
 
 RUN dotnet restore
 
@@ -19,7 +20,8 @@ COPY . .
 
 RUN dotnet build --no-restore -c "Release" \
     && dotnet publish --no-build -c "Release" -o /publish/Ferdinand.Data.Migrations /build/src/Ferdinand.Data.Migrations/ \
-    && dotnet publish --no-build -c "Release" -o /publish/Ferdinand.Api /build/src/Ferdinand.Api/
+    && dotnet publish --no-build -c "Release" -o /publish/Ferdinand.Api /build/src/Ferdinand.Api/ \
+    && dotnet publish --no-build -c "Release" -o /publish/Ferdinand.Jobs /build/src/Ferdinand.Jobs/
 
 FROM mcr.microsoft.com/dotnet/aspnet:7.0.1-alpine3.17 AS release
 WORKDIR /app
@@ -29,6 +31,10 @@ COPY --from=build /build/run.sh .
 FROM release as release-api
 WORKDIR /app/Ferdinand.Api
 ENTRYPOINT [ "dotnet", "Ferdinand.Api.dll" ]
+
+FROM release as release-jobs
+WORKDIR /app/Ferdinand.Jobs
+ENTRYPOINT [ "dotnet", "Ferdinand.Jobs.dll" ]
 
 FROM release as release-migrations
 WORKDIR /app/Ferdinand.Data.Migrations

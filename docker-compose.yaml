@@ -17,6 +17,14 @@ services:
         condition: service_healthy
       migrations:
         condition: service_completed_successfully
+  jobs:
+    container_name: jobs
+    image: ferdinand:jobs
+    build:
+      context: .
+      target: release-jobs
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
   migrations:
     container_name: migrations
     image: ferdinand:migrations
