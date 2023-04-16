@@ -9,6 +9,10 @@
 
   <ItemGroup>
     <PackageReference Include="Microsoft.Extensions.Hosting" Version="7.0.1" />
+    <PackageReference Include="NServiceBus" Version="7.8.2" />
+    <PackageReference Include="NServiceBus.Extensions.Hosting" Version="1.1.0" />
+    <PackageReference Include="NServiceBus.Newtonsoft.Json" Version="2.4.0" />
+    <PackageReference Include="NServiceBus.RabbitMQ" Version="7.0.5" />
     <PackageReference Include="Quartz" Version="3.6.2" />
     <PackageReference Include="Quartz.Extensions.DependencyInjection" Version="3.6.2" />
     <PackageReference Include="Quartz.Extensions.Hosting" Version="3.6.2" />
@@ -23,6 +27,12 @@
     <Content Include="appsettings.json">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Ferdinand.Application\Ferdinand.Application.csproj" />
+    <ProjectReference Include="..\Ferdinand.Data\Ferdinand.Data.csproj" />
+    <ProjectReference Include="..\Ferdinand.Extensions.Hosting\Ferdinand.Extensions.Hosting.csproj" />
   </ItemGroup>
 
 </Project>

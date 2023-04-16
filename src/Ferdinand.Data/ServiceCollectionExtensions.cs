@@ -23,7 +23,8 @@ public static class ServiceCollectionExtensions
                 opts.UseNpgsql(_connectionString)
                     .AddInterceptors(convertDomainEventsToOutboxMessagesInterceptor);
             })
-            .AddScoped<IColorRepository, ColorRepository>();
+            .AddScoped<IColorRepository, ColorRepository>()
+            .AddScoped<OutboxMessageRepository>();
         
         return services;
     }

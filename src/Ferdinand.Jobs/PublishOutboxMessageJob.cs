@@ -1,20 +1,20 @@
-using Microsoft.Extensions.Logging;
+using Ferdinand.Application.Commands.PublishOutboxMessage;
+using MediatR;
 using Quartz;
 
 namespace Ferdinand.Jobs;
 
 public sealed class PublishOutboxMessageJob : IJob
 {
-    private readonly ILogger<PublishOutboxMessageJob> _logger;
-
-    public PublishOutboxMessageJob(ILogger<PublishOutboxMessageJob> logger)
+    private readonly IMediator _mediator;
+    
+    public PublishOutboxMessageJob(IMediator mediator)
     {
-        _logger = logger;
+        _mediator = mediator;
     }
     
-    public Task Execute(IJobExecutionContext context)
+    public async Task Execute(IJobExecutionContext context)
     {
-        _logger.LogInformation("Executing {Name}", GetType().Name);
-        return Task.CompletedTask;
+        await _mediator.Send(new PublishOutboxMessageCommand());
     }
 }

@@ -2,9 +2,11 @@ using Ferdinand.Api;
 using Ferdinand.Application;
 using Ferdinand.Data;
 using Ferdinand.Data.EntityFrameworkCore;
+using Ferdinand.Extensions.Hosting;
 using Microsoft.AspNetCore.Diagnostics.HealthChecks;
 using Microsoft.AspNetCore.Mvc.Versioning;
 using Serilog;
+using AssemblyMarker = Ferdinand.Api.AssemblyMarker;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -12,6 +14,8 @@ var builder = WebApplication.CreateBuilder(args);
 
 builder.Host.UseSerilog((context, configuration) =>
     configuration.ReadFrom.Configuration(context.Configuration));
+
+builder.Host.ConfigureNServiceBus(typeof(AssemblyMarker).Assembly.GetName().Name);
 
 builder.Services.AddApiVersioning(o =>
 {

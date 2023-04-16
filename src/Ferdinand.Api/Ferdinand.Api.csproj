@@ -21,6 +21,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\Ferdinand.Application\Ferdinand.Application.csproj" />
+    <ProjectReference Include="..\Ferdinand.Extensions.Hosting\Ferdinand.Extensions.Hosting.csproj" />
   </ItemGroup>
 
 </Project>

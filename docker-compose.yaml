@@ -10,6 +10,7 @@ services:
       - ASPNETCORE_URLS=http://+:5000
       - ASPNETCORE_ENVIRONMENT=Development
       - CONNECTIONSTRINGS__POSTGRES
+      - CONNECTIONSTRINGS__RABBITMQ
     ports:
       - "5000:5000"
     depends_on:
@@ -25,6 +26,15 @@ services:
       target: release-jobs
     environment:
       - ASPNETCORE_ENVIRONMENT=Development
+      - CONNECTIONSTRINGS__POSTGRES
+      - CONNECTIONSTRINGS__RABBITMQ
+    depends_on:
+      postgres:
+        condition: service_healthy
+      rabbitmq:
+        condition: service_healthy
+      migrations:
+        condition: service_completed_successfully
   migrations:
     container_name: migrations
     image: ferdinand:migrations
@@ -51,3 +61,17 @@ services:
       retries: 5
     volumes:
       - ${FERDINAND_DOCKER_VOLUMES_ROOT}/data/postgres:/var/lib/postgresql/data
+  rabbitmq:
+    container_name: rabbitmq
+    image: rabbitmq:3.11.13-management-alpine
+    ports:
+      - "5672:5672"
+      - "15672:15672"
+    healthcheck:
+      test: rabbitmq-diagnostics -q ping
+      interval: 30s
+      timeout: 30s
+      retries: 3
+    volumes:
+      - ${FERDINAND_DOCKER_VOLUMES_ROOT}/data/rabbitmq/data:/var/lib/rabbitmq
+      - ${FERDINAND_DOCKER_VOLUMES_ROOT}/data/rabbitmq/log:/var/log/rabbitmq

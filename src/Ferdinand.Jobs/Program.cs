@@ -1,23 +1,23 @@
-﻿using Ferdinand.Jobs;
+﻿using Ferdinand.Application;
+using Ferdinand.Data;
+using Ferdinand.Extensions.Hosting;
+using Ferdinand.Jobs;
 using Microsoft.Extensions.Hosting;
-using Quartz;
 using Serilog;
+using AssemblyMarker = Ferdinand.Jobs.AssemblyMarker;
 
 var host = Host.CreateDefaultBuilder()
     .UseSerilog((context, configuration) =>
         configuration.ReadFrom.Configuration(context.Configuration))
-    .ConfigureServices((cxt, services) =>
+    .ConfigureNServiceBus(typeof(AssemblyMarker).Assembly.GetName().Name)
+    .ConfigureServices((ctx, services) =>
     {
-        services.AddQuartz(q =>
-        {
-            q.UseMicrosoftDependencyInjectionJobFactory();
-            q.AddJobs();
-        });
-        
-        services.AddQuartzHostedService(opt =>
-        {
-            opt.WaitForJobsToComplete = true;
-        });
-    }).Build();
+        services
+            .AddDataServices(ctx.Configuration)
+            .AddApplicationServices()
+            .AddQuartz()
+            ;
+    })
+    .Build();
 
 await host.RunAsync();
