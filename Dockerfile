@@ -27,7 +27,6 @@ RUN dotnet build --no-restore -c "Release" \
 FROM mcr.microsoft.com/dotnet/aspnet:7.0.1-alpine3.17 AS release
 WORKDIR /app
 COPY --from=build /publish .
-COPY --from=build /build/run.sh .
 
 FROM release as release-api
 WORKDIR /app/Ferdinand.Api
