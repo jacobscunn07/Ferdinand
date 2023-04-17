@@ -30,9 +30,8 @@ A REST Api built on top of ASP.NET Core MVC. A few features to highlight are
 * Transactional Outbox Pattern is implemented by default to atomically update an aggregate and publish messages
 
 #### Jobs
-:construction: This service is still to be developed. An initial implementation should be done soon.
-
-The Jobs service is a background service that executes scheduled jobs. The initial job to be developed will be an outbox message publishing job to fully implement the Outbox Pattern.
+A background service for executing scheduled jobs. 
+* Publish Outbox Messages Job - As part of the Transactional Outbox Design Pattern, this job will poll a database table for messages that need to be published.
 
 #### Messaging
 :construction: This service is still to be developed. An initial implementation should be done soon.
