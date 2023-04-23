@@ -7,6 +7,7 @@ using Ferdinand.Domain.Repositories;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Testcontainers.PostgreSql;
 using Xunit;
 
 namespace Ferdinand.Application.Tests.Integration;
@@ -15,17 +16,14 @@ public class HostFixture : IAsyncLifetime
 {
     public IHost Host { get; private set; } = null!;
 
-    private readonly TestcontainerDatabase _dbContainer;
+    private readonly PostgreSqlContainer _dbContainer;
 
     public HostFixture()
     {
-        _dbContainer = new ContainerBuilder<PostgreSqlTestcontainer>()
-            .WithDatabase(new PostgreSqlTestcontainerConfiguration
-            {
-                Database = "ferdinand_data_test",
-                Username = "ferdinand",
-                Password = "ferdinand"
-            })
+        _dbContainer = new PostgreSqlBuilder()
+            .WithDatabase("ferdinand")
+            .WithUsername("ferdinand")
+            .WithPassword("ferdinand")
             .WithImage("postgres:15.1")
             .Build();
     }
@@ -54,7 +52,7 @@ public class HostFixture : IAsyncLifetime
             .ConfigureServices(services =>
             {
                 services.AddDbContext<FerdinandDbContext>(opts =>
-                    opts.UseNpgsql(_dbContainer.ConnectionString));
+                    opts.UseNpgsql(_dbContainer.GetConnectionString()));
                 services.AddTransient<IColorRepository, ColorRepository>();
             })
             .Build();
