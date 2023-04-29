@@ -1,16 +1,13 @@
-using DotNet.Testcontainers.Builders;
-using DotNet.Testcontainers.Configurations;
-using DotNet.Testcontainers.Containers;
-using Ferdinand.Infrastructure.EntityFrameworkCore;
 using Ferdinand.Domain.Repositories;
 using Ferdinand.Infrastructure.Data.EntityFrameworkCore.Repositories;
+using Ferdinand.Infrastructure.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Testcontainers.PostgreSql;
 using Xunit;
 
-namespace Ferdinand.Data.Tests.Integration.EntityFrameworkCore;
+namespace Ferdinand.Infrastructure.Tests.Integration.Data.EntityFrameworkCore;
 
 public class HostFixture : IAsyncLifetime
 {

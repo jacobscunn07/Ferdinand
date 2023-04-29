@@ -1,11 +1,11 @@
-using Ferdinand.Infrastructure.EntityFrameworkCore;
 using Ferdinand.Domain.Models;
 using Ferdinand.Domain.Repositories;
+using Ferdinand.Infrastructure.EntityFrameworkCore;
 using FluentAssertions;
 using Microsoft.Extensions.DependencyInjection;
 using Xunit;
 
-namespace Ferdinand.Data.Tests.Integration.EntityFrameworkCore.ColorRepositoryTests;
+namespace Ferdinand.Infrastructure.Tests.Integration.Data.EntityFrameworkCore.ColorRepositoryTests;
 
 [Collection("EntityFrameworkCore ColorRepository Collection")]
 public class AddRangeColorRepositoryTests

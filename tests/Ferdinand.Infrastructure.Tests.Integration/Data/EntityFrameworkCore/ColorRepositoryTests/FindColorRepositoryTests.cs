@@ -1,24 +1,24 @@
-using Ferdinand.Infrastructure.EntityFrameworkCore;
 using Ferdinand.Domain.Models;
 using Ferdinand.Domain.Repositories;
+using Ferdinand.Infrastructure.EntityFrameworkCore;
 using FluentAssertions;
 using Microsoft.Extensions.DependencyInjection;
 using Xunit;
 
-namespace Ferdinand.Data.Tests.Integration.EntityFrameworkCore.ColorRepositoryTests;
+namespace Ferdinand.Infrastructure.Tests.Integration.Data.EntityFrameworkCore.ColorRepositoryTests;
 
 [Collection("EntityFrameworkCore ColorRepository Collection")]
-public class RemoveRangeColorRepositoryTests
+public class FindColorRepositoryTests
 {
     private readonly HostFixture _fixture;
 
-    public RemoveRangeColorRepositoryTests(HostFixture fixture)
+    public FindColorRepositoryTests(HostFixture fixture)
     {
         _fixture = fixture;
     }
     
     [Fact]
-    public async Task RemoveRange_ShouldRemoveColorsFromDatabase_WhenInvoked()
+    public async Task Find_ShouldReturnMatchingColors_WhenInvoked()
     {
         // Arrange
         using var scope = _fixture.Host.Services.CreateScope();
@@ -28,16 +28,16 @@ public class RemoveRangeColorRepositoryTests
         var tenant = Tenant.Create("tenant");
         var hexValue = new Bogus.Randomizer().Hexadecimal(6, "");
         var color = Color.FromHexValue(tenant, hexValue);
-        var colors = new List<Color> { color };
-        await sut.AddRange(colors);
+        await sut.Add(color);
         await ctx.SaveChangesAsync();
 
         // Act
-        var colorFromDb = await sut.GetByKey(color.Key);
-        await sut.RemoveRange(new List<Color> { colorFromDb });
-        await ctx.SaveChangesAsync();
+        var colorsFromDb = sut.Find(x => x.HexValue == hexValue);
+        var colorFromDb = colorsFromDb.FirstOrDefault();
 
         // Assert
-        (await sut.Exists(color.Key)).Should().BeFalse();
+        colorsFromDb.Should().HaveCount(1);
+        colorFromDb.Should().NotBeNull();
+        colorFromDb.Should().BeEquivalentTo(color);
     }
 }

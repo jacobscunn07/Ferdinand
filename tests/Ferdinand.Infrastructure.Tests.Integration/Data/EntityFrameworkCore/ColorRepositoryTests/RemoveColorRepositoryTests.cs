@@ -1,24 +1,24 @@
-using Ferdinand.Infrastructure.EntityFrameworkCore;
 using Ferdinand.Domain.Models;
 using Ferdinand.Domain.Repositories;
+using Ferdinand.Infrastructure.EntityFrameworkCore;
 using FluentAssertions;
 using Microsoft.Extensions.DependencyInjection;
 using Xunit;
 
-namespace Ferdinand.Data.Tests.Integration.EntityFrameworkCore.ColorRepositoryTests;
+namespace Ferdinand.Infrastructure.Tests.Integration.Data.EntityFrameworkCore.ColorRepositoryTests;
 
 [Collection("EntityFrameworkCore ColorRepository Collection")]
-public class ExistsColorRepositoryTests
+public class RemoveColorRepositoryTests
 {
     private readonly HostFixture _fixture;
 
-    public ExistsColorRepositoryTests(HostFixture fixture)
+    public RemoveColorRepositoryTests(HostFixture fixture)
     {
         _fixture = fixture;
     }
     
     [Fact]
-    public async Task Exists_ShouldBeTrue_WhenColorDoesExist()
+    public async Task Remove_ShouldRemoveColorFromDatabase_WhenInvoked()
     {
         // Arrange
         using var scope = _fixture.Host.Services.CreateScope();
@@ -28,29 +28,15 @@ public class ExistsColorRepositoryTests
         var tenant = Tenant.Create("tenant");
         var hexValue = new Bogus.Randomizer().Hexadecimal(6, "");
         var color = Color.FromHexValue(tenant, hexValue);
-
-        // Act
         await sut.Add(color);
         await ctx.SaveChangesAsync();
-        var exists = await sut.Exists(color.Key);
-
-        // Assert
-        exists.Should().BeTrue();
-    }
-    
-    [Fact]
-    public async Task Exists_ShouldBeFalse_WhenColorDoesNotExist()
-    {
-        // Arrange
-        using var scope = _fixture.Host.Services.CreateScope();
-        var sut = scope.ServiceProvider.GetRequiredService<IColorRepository>();
-
-        var colorKey = ColorKey.CreateUnique();
 
         // Act
-        var exists = await sut.Exists(colorKey);
+        var colorFromDb = await sut.GetByKey(color.Key);
+        await sut.Remove(colorFromDb);
+        await ctx.SaveChangesAsync();
 
         // Assert
-        exists.Should().BeFalse();
+        (await sut.Exists(color.Key)).Should().BeFalse();
     }
 }

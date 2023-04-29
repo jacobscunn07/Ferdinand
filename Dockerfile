@@ -4,7 +4,7 @@ WORKDIR /build
 
 COPY ./Ferdinand.sln .
 COPY ./tests/Ferdinand.Application.Tests.Integration/Ferdinand.Application.Tests.Integration.csproj ./tests/Ferdinand.Application.Tests.Integration/Ferdinand.Application.Tests.Integration.csproj
-COPY ./tests/Ferdinand.Data.Tests.Integration/Ferdinand.Data.Tests.Integration.csproj ./tests/Ferdinand.Data.Tests.Integration/Ferdinand.Data.Tests.Integration.csproj
+COPY ./tests/Ferdinand.Infrastructure.Tests.Integration/Ferdinand.Infrastructure.Tests.Integration.csproj ./tests/Ferdinand.Infrastructure.Tests.Integration/Ferdinand.Infrastructure.Tests.Integration.csproj
 COPY ./tests/Ferdinand.Domain.Tests.Unit/Ferdinand.Domain.Tests.Unit.csproj ./tests/Ferdinand.Domain.Tests.Unit/Ferdinand.Domain.Tests.Unit.csproj
 COPY ./src/Ferdinand.Extensions.Hosting/Ferdinand.Extensions.Hosting.csproj ./src/Ferdinand.Extensions.Hosting/Ferdinand.Extensions.Hosting.csproj
 COPY ./src/Ferdinand.Domain.Primitives/Ferdinand.Domain.Primitives.csproj ./src/Ferdinand.Domain.Primitives/Ferdinand.Domain.Primitives.csproj  

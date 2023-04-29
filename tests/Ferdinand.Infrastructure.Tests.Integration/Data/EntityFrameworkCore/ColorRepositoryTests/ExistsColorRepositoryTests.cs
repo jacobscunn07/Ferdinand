@@ -1,59 +1,56 @@
-using Ferdinand.Infrastructure.EntityFrameworkCore;
 using Ferdinand.Domain.Models;
 using Ferdinand.Domain.Repositories;
+using Ferdinand.Infrastructure.EntityFrameworkCore;
 using FluentAssertions;
 using Microsoft.Extensions.DependencyInjection;
-using Throw;
 using Xunit;
 
-namespace Ferdinand.Data.Tests.Integration.EntityFrameworkCore.ColorRepositoryTests;
+namespace Ferdinand.Infrastructure.Tests.Integration.Data.EntityFrameworkCore.ColorRepositoryTests;
 
 [Collection("EntityFrameworkCore ColorRepository Collection")]
-public class GetByKeyColorRepositoryTests
+public class ExistsColorRepositoryTests
 {
     private readonly HostFixture _fixture;
 
-    public GetByKeyColorRepositoryTests(HostFixture fixture)
+    public ExistsColorRepositoryTests(HostFixture fixture)
     {
         _fixture = fixture;
     }
-
+    
     [Fact]
-    public async Task GetByKey_ShouldReturnColor_WhenKeyExists()
+    public async Task Exists_ShouldBeTrue_WhenColorDoesExist()
     {
         // Arrange
         using var scope = _fixture.Host.Services.CreateScope();
         var ctx = scope.ServiceProvider.GetRequiredService<FerdinandDbContext>();
         var sut = scope.ServiceProvider.GetRequiredService<IColorRepository>();
-
+        
         var tenant = Tenant.Create("tenant");
         var hexValue = new Bogus.Randomizer().Hexadecimal(6, "");
         var color = Color.FromHexValue(tenant, hexValue);
 
+        // Act
         await sut.Add(color);
         await ctx.SaveChangesAsync();
-
-        // Act
-        var colorFromDb = await sut.GetByKey(color.Key);
+        var exists = await sut.Exists(color.Key);
 
         // Assert
-        colorFromDb.Should().NotBeNull();
-        colorFromDb.Should().BeEquivalentTo(color);
+        exists.Should().BeTrue();
     }
     
     [Fact]
-    public Task GetByKey_ShouldNotReturnColor_WhenNoKeyExists()
+    public async Task Exists_ShouldBeFalse_WhenColorDoesNotExist()
     {
         // Arrange
         using var scope = _fixture.Host.Services.CreateScope();
         var sut = scope.ServiceProvider.GetRequiredService<IColorRepository>();
-        var key = ColorKey.CreateUnique();
+
+        var colorKey = ColorKey.CreateUnique();
 
         // Act
-        var action = async () => await sut.GetByKey(key);
+        var exists = await sut.Exists(colorKey);
 
         // Assert
-        action.Should().Throw();
-        return Task.CompletedTask;
+        exists.Should().BeFalse();
     }
 }

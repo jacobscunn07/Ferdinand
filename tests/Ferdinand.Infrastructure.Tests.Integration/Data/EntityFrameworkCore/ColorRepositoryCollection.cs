@@ -1,6 +1,6 @@
 using Xunit;
 
-namespace Ferdinand.Data.Tests.Integration.EntityFrameworkCore;
+namespace Ferdinand.Infrastructure.Tests.Integration.Data.EntityFrameworkCore;
 
 [CollectionDefinition("EntityFrameworkCore ColorRepository Collection")]
 public class ColorRepositoryCollection : ICollectionFixture<HostFixture> { }

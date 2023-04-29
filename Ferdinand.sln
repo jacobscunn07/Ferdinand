@@ -21,7 +21,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Ferdinand.Domain.Tests.Unit
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Ferdinand.Api", "src\Ferdinand.Api\Ferdinand.Api.csproj", "{25F4BBDB-A091-4BAB-B4D2-2C9E8AA0D8E8}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Ferdinand.Data.Tests.Integration", "tests\Ferdinand.Data.Tests.Integration\Ferdinand.Data.Tests.Integration.csproj", "{F359D7F1-F371-4647-9FBC-551E09B5C169}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Ferdinand.Infrastructure.Tests.Integration", "tests\Ferdinand.Infrastructure.Tests.Integration\Ferdinand.Infrastructure.Tests.Integration.csproj", "{F359D7F1-F371-4647-9FBC-551E09B5C169}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Ferdinand.Application.Tests.Integration", "tests\Ferdinand.Application.Tests.Integration\Ferdinand.Application.Tests.Integration.csproj", "{1D14966F-DAB3-446D-9C1C-DB2EDE04F0D0}"
 EndProject
