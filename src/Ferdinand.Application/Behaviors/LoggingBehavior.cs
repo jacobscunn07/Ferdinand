@@ -1,14 +1,14 @@
+using Ferdinand.Common.Logging;
 using MediatR;
-using Microsoft.Extensions.Logging;
 
 namespace Ferdinand.Application.Behaviors;
 
 public sealed class LoggingBehavior<TRequest, TResponse> : IPipelineBehavior<TRequest, TResponse>
 where TRequest : IRequest<TResponse>
 {
-    private readonly ILogger<LoggingBehavior<TRequest, TResponse>> _logger;
+    private readonly ILoggerAdapter<LoggingBehavior<TRequest, TResponse>> _logger;
 
-    public LoggingBehavior(ILogger<LoggingBehavior<TRequest, TResponse>> logger)
+    public LoggingBehavior(ILoggerAdapter<LoggingBehavior<TRequest, TResponse>> logger)
     {
         _logger = logger;
     }

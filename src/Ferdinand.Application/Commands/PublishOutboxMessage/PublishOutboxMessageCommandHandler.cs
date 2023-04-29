@@ -1,22 +1,22 @@
+using Ferdinand.Common.Logging;
+using Ferdinand.Common.Messaging;
 using Ferdinand.Data.EntityFrameworkCore.Repositories;
 using Ferdinand.Domain.Primitives;
 using MediatR;
-using Microsoft.Extensions.Logging;
 using Newtonsoft.Json;
-using NServiceBus;
 
 namespace Ferdinand.Application.Commands.PublishOutboxMessage;
 
 public class PublishOutboxMessageCommandHandler : IRequestHandler<PublishOutboxMessageCommand>
 {
     private readonly OutboxMessageRepository _outboxMessageRepository;
-    private readonly IMessageSession _messageSession; 
-    private readonly ILogger<PublishOutboxMessageCommandHandler> _logger;
+    private readonly IMessageBus _bus; 
+    private readonly ILoggerAdapter<PublishOutboxMessageCommandHandler> _logger;
 
-    public PublishOutboxMessageCommandHandler(OutboxMessageRepository outboxMessageRepository, IMessageSession messageSession, ILogger<PublishOutboxMessageCommandHandler> logger)
+    public PublishOutboxMessageCommandHandler(OutboxMessageRepository outboxMessageRepository, IMessageBus bus, ILoggerAdapter<PublishOutboxMessageCommandHandler> logger)
     {
         _outboxMessageRepository = outboxMessageRepository;
-        _messageSession = messageSession;
+        _bus = bus;
         _logger = logger;
     }
 
@@ -42,7 +42,7 @@ public class PublishOutboxMessageCommandHandler : IRequestHandler<PublishOutboxM
 
             if (domainEvent is null) continue;
             
-            await _messageSession.Publish(domainEvent);
+            await _bus.Publish(domainEvent);
             
             outboxMessage.ProcessedUtc = DateTime.UtcNow;
         }
