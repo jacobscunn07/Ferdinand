@@ -84,9 +84,9 @@ Navigate to http://localhost:5000/swagger
 
 ```shell
 dotnet ef migrations add Initial \
--s src/Ferdinand.Data.Migrations \
--p src/Ferdinand.Data \
--o EntityFrameworkCore/Migrations
+-s src/Ferdinand.DataMigrations \
+-p src/Ferdinand.Infrastructure \
+-o Data/EntityFrameworkCore/Migrations
 ```
 
 ## Roadmap
