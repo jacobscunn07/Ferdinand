@@ -1,6 +1,6 @@
 using Microsoft.Extensions.Logging;
 
-namespace Ferdinand.Common.Logging;
+namespace Ferdinand.Infrastructure.Logging;
 
 public class LoggerAdapter<T> : ILoggerAdapter<T>
 {

@@ -1,4 +1,4 @@
-using Ferdinand.Common.Logging;
+using Ferdinand.Infrastructure.Logging;
 using MediatR;
 
 namespace Ferdinand.Application.Behaviors;

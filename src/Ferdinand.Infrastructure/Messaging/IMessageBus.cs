@@ -1,4 +1,4 @@
-namespace Ferdinand.Common.Messaging;
+namespace Ferdinand.Infrastructure.Messaging;
 
 public interface IMessageBus
 {

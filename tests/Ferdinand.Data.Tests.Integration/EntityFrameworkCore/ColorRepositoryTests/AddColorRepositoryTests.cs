@@ -1,5 +1,5 @@
 using Bogus;
-using Ferdinand.Data.EntityFrameworkCore;
+using Ferdinand.Infrastructure.EntityFrameworkCore;
 using Ferdinand.Domain.Models;
 using Ferdinand.Domain.Repositories;
 using FluentAssertions;

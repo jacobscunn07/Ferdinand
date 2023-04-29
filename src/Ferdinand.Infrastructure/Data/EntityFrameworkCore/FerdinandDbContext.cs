@@ -1,8 +1,8 @@
-using Ferdinand.Data.Outbox;
 using Ferdinand.Domain.Models;
+using Ferdinand.Infrastructure.Data.Outbox;
 using Microsoft.EntityFrameworkCore;
 
-namespace Ferdinand.Data.EntityFrameworkCore;
+namespace Ferdinand.Infrastructure.EntityFrameworkCore;
 
 public sealed class FerdinandDbContext : DbContext
 {

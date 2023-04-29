@@ -2,7 +2,7 @@ using Ferdinand.Domain.Models;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
-namespace Ferdinand.Data.EntityFrameworkCore.Configurations;
+namespace Ferdinand.Infrastructure.Data.EntityFrameworkCore.Configurations;
 
 public sealed class ColorConfiguration : IEntityTypeConfiguration<Color>
 {

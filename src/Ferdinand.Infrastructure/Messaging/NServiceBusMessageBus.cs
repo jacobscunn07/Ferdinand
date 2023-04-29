@@ -1,6 +1,6 @@
 using NServiceBus;
 
-namespace Ferdinand.Common.Messaging;
+namespace Ferdinand.Infrastructure.Messaging;
 
 public class NServiceBusMessageBus : IMessageBus
 {

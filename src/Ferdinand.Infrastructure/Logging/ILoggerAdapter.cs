@@ -1,4 +1,4 @@
-namespace Ferdinand.Common.Logging;
+namespace Ferdinand.Infrastructure.Logging;
 
 public interface ILoggerAdapter<T>
 {

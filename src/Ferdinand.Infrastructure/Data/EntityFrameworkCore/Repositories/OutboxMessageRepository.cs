@@ -1,6 +1,7 @@
-using Ferdinand.Data.Outbox;
+using Ferdinand.Infrastructure.Data.Outbox;
+using Ferdinand.Infrastructure.EntityFrameworkCore;
 
-namespace Ferdinand.Data.EntityFrameworkCore.Repositories;
+namespace Ferdinand.Infrastructure.Data.EntityFrameworkCore.Repositories;
 
 public class OutboxMessageRepository
 {

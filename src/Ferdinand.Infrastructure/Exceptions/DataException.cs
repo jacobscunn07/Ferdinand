@@ -1,4 +1,4 @@
-namespace Ferdinand.Data.Exceptions;
+namespace Ferdinand.Infrastructure.Exceptions;
 
 public class DataException : Exception
 {

@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 #nullable disable
 
-namespace Ferdinand.Data.EntityFrameworkCore.Migrations
+namespace Ferdinand.Infrastructure.Data.EntityFrameworkCore.Migrations
 {
     /// <inheritdoc />
     public partial class Initial : Migration

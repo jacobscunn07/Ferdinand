@@ -28,7 +28,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\src\Ferdinand.Data\Ferdinand.Data.csproj" />
+    <ProjectReference Include="..\..\src\Ferdinand.Infrastructure\Ferdinand.Infrastructure.csproj" />
   </ItemGroup>
 
 </Project>

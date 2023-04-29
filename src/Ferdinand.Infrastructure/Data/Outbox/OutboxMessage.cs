@@ -1,4 +1,4 @@
-namespace Ferdinand.Data.Outbox;
+namespace Ferdinand.Infrastructure.Data.Outbox;
 
 public sealed class OutboxMessage
 {

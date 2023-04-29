@@ -1,10 +1,11 @@
 using System.Linq.Expressions;
-using Ferdinand.Data.Exceptions;
 using Ferdinand.Domain.Models;
 using Ferdinand.Domain.Repositories;
+using Ferdinand.Infrastructure.EntityFrameworkCore;
+using Ferdinand.Infrastructure.Exceptions;
 using Microsoft.EntityFrameworkCore;
 
-namespace Ferdinand.Data.EntityFrameworkCore.Repositories;
+namespace Ferdinand.Infrastructure.Data.EntityFrameworkCore.Repositories;
 
 public sealed class ColorRepository : IColorRepository
 {

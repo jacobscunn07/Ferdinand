@@ -1,6 +1,7 @@
-﻿using Ferdinand.Application;
-using Ferdinand.Data;
-using Ferdinand.Data.EntityFrameworkCore;
+﻿using Ferdinand.Infrastructure.EntityFrameworkCore;
+using Ferdinand.Infrastructure.Logging;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 
@@ -10,12 +11,14 @@ var host = Host
        {
             services
                 .AddHostedService<MigrationRunnerService>()
-                .AddDataServices(ctx.Configuration)
-                .AddApplicationServices();
+                .AddTransient(typeof(ILoggerAdapter<>), typeof(LoggerAdapter<>))
+                .AddDbContext<FerdinandDbContext>((sp, opts) =>
+                {
+                    var _connectionString = ctx.Configuration.GetConnectionString("Postgres");
+                    opts.UseNpgsql(_connectionString);
+                }, ServiceLifetime.Singleton)
+                ;
        }
     ).Build();
-
-var ctx = host.Services.GetRequiredService<FerdinandDbContext>();
-await ctx.Database.EnsureCreatedAsync();
 
 await host.RunAsync();

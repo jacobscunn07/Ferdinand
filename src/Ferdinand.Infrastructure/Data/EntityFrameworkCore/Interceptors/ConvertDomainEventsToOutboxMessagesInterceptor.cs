@@ -1,9 +1,10 @@
-using Ferdinand.Data.Outbox;
 using Ferdinand.Domain.Primitives;
+using Ferdinand.Infrastructure.Data.Outbox;
+using Ferdinand.Infrastructure.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Diagnostics;
 using Newtonsoft.Json;
 
-namespace Ferdinand.Data.EntityFrameworkCore.Interceptors;
+namespace Ferdinand.Infrastructure.Data.EntityFrameworkCore.Interceptors;
 
 public class ConvertDomainEventsToOutboxMessagesInterceptor : SaveChangesInterceptor
 {

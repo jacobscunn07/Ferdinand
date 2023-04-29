@@ -1,3 +1,3 @@
-namespace Ferdinand.Data;
+namespace Ferdinand.Infrastructure;
 
 public sealed class AssemblyMarker {}

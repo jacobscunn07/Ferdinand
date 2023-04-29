@@ -9,9 +9,10 @@
     <PackageReference Include="Npgsql.EntityFrameworkCore.PostgreSQL" Version="7.0.1" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="7.0.1" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="7.0.1" />
+    <PackageReference Include="NServiceBus" Version="7.8.2" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="EntityFrameworkCore\Migrations" />
+    <Folder Include="Data" />
   </ItemGroup>
   <PropertyGroup>
     <TargetFramework>net7.0</TargetFramework>

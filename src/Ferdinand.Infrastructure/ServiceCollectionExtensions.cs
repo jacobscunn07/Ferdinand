@@ -1,12 +1,12 @@
-using Ferdinand.Data.EntityFrameworkCore;
-using Ferdinand.Data.EntityFrameworkCore.Interceptors;
-using Ferdinand.Data.EntityFrameworkCore.Repositories;
 using Ferdinand.Domain.Repositories;
+using Ferdinand.Infrastructure.Data.EntityFrameworkCore.Interceptors;
+using Ferdinand.Infrastructure.Data.EntityFrameworkCore.Repositories;
+using Ferdinand.Infrastructure.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 
-namespace Ferdinand.Data;
+namespace Ferdinand.Infrastructure;
 
 public static class ServiceCollectionExtensions
 {

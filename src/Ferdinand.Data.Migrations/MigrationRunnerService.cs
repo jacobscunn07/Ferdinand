@@ -1,21 +1,21 @@
-using Ferdinand.Application.Commands.MigrateDatabase;
-using MediatR;
+using Ferdinand.Infrastructure.EntityFrameworkCore;
+using Ferdinand.Infrastructure.Logging;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Hosting;
-using Microsoft.Extensions.Logging;
 
 public class MigrationRunnerService : IHostedService
 {
     private readonly IHostApplicationLifetime _hostApplicationLifetime;
-    private readonly IMediator _mediator;
-    private readonly ILogger<MigrationRunnerService> _logger;
+    private readonly FerdinandDbContext _ctx;
+    private readonly ILoggerAdapter<MigrationRunnerService> _logger;
 
     public MigrationRunnerService(
         IHostApplicationLifetime hostApplicationLifetime,
-        IMediator mediator,
-        ILogger<MigrationRunnerService> logger)
+        FerdinandDbContext ctx,
+        ILoggerAdapter<MigrationRunnerService> logger)
     {
         _hostApplicationLifetime = hostApplicationLifetime;
-        _mediator = mediator;
+        _ctx = ctx;
         _logger = logger;
     }
 
@@ -25,7 +25,12 @@ public class MigrationRunnerService : IHostedService
         {
             try
             {
-                await _mediator.Send(new MigrateDatabaseCommand(), cancellationToken);
+                _logger.LogInformation("Executing migrations...");
+                if (await _ctx.Database.EnsureCreatedAsync(cancellationToken))
+                {
+                    await _ctx.Database.MigrateAsync(cancellationToken);
+                }
+                _logger.LogInformation("Executing migrations completed...");
             }
             catch(Exception e)
             {
