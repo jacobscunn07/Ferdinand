@@ -1,4 +1,4 @@
-using Ferdinand.Data.EntityFrameworkCore;
+using Ferdinand.Infrastructure.EntityFrameworkCore;
 using MediatR;
 
 namespace Ferdinand.Application.Behaviors;

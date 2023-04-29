@@ -9,11 +9,11 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Ferdinand.Domain", "src\Fer
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Ferdinand.Domain.Primitives", "src\Ferdinand.Domain.Primitives\Ferdinand.Domain.Primitives.csproj", "{02039A29-E322-4DE3-966D-F27AD095883A}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Ferdinand.Data", "src\Ferdinand.Data\Ferdinand.Data.csproj", "{2CE3930E-18FC-4B8C-91C4-4C8CD7F99A68}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Ferdinand.Infrastructure", "src\Ferdinand.Infrastructure\Ferdinand.Infrastructure.csproj", "{2CE3930E-18FC-4B8C-91C4-4C8CD7F99A68}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Ferdinand.Application", "src\Ferdinand.Application\Ferdinand.Application.csproj", "{4DF2F207-3820-441D-8C1B-6B5D89D25DF9}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Ferdinand.Data.Migrations", "src\Ferdinand.Data.Migrations\Ferdinand.Data.Migrations.csproj", "{4DA00B9B-740D-4B63-B942-77916CFE2CF6}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Ferdinand.DataMigrations", "src\Ferdinand.DataMigrations\Ferdinand.DataMigrations.csproj", "{4DA00B9B-740D-4B63-B942-77916CFE2CF6}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "tests", "tests", "{160C3F30-1A46-421C-AB27-F6BB6C6FD74F}"
 EndProject
@@ -21,15 +21,13 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Ferdinand.Domain.Tests.Unit
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Ferdinand.Api", "src\Ferdinand.Api\Ferdinand.Api.csproj", "{25F4BBDB-A091-4BAB-B4D2-2C9E8AA0D8E8}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Ferdinand.Data.Tests.Integration", "tests\Ferdinand.Data.Tests.Integration\Ferdinand.Data.Tests.Integration.csproj", "{F359D7F1-F371-4647-9FBC-551E09B5C169}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Ferdinand.Infrastructure.Tests.Integration", "tests\Ferdinand.Infrastructure.Tests.Integration\Ferdinand.Infrastructure.Tests.Integration.csproj", "{F359D7F1-F371-4647-9FBC-551E09B5C169}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Ferdinand.Application.Tests.Integration", "tests\Ferdinand.Application.Tests.Integration\Ferdinand.Application.Tests.Integration.csproj", "{1D14966F-DAB3-446D-9C1C-DB2EDE04F0D0}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Ferdinand.Jobs", "src\Ferdinand.Jobs\Ferdinand.Jobs.csproj", "{3B0158F8-70CD-4DFA-AC29-896FFDD1C1C1}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Ferdinand.Extensions.Hosting", "src\Ferdinand.Extensions.Hosting\Ferdinand.Extensions.Hosting.csproj", "{C63EDE66-D86C-4133-9B63-B1E04BF5A8BE}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Ferdinand.Common", "src\Ferdinand.Common\Ferdinand.Common.csproj", "{1CB86CF4-E776-410C-B5FA-6F7B40AE4F98}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -84,10 +82,6 @@ Global
 		{C63EDE66-D86C-4133-9B63-B1E04BF5A8BE}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{C63EDE66-D86C-4133-9B63-B1E04BF5A8BE}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{C63EDE66-D86C-4133-9B63-B1E04BF5A8BE}.Release|Any CPU.Build.0 = Release|Any CPU
-		{1CB86CF4-E776-410C-B5FA-6F7B40AE4F98}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{1CB86CF4-E776-410C-B5FA-6F7B40AE4F98}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{1CB86CF4-E776-410C-B5FA-6F7B40AE4F98}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{1CB86CF4-E776-410C-B5FA-6F7B40AE4F98}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
 		{8C690961-BDDF-4A6E-BF67-7004FBF40788} = {A882DCCA-11E7-48E8-B629-B30C78E88AF2}
@@ -101,6 +95,5 @@ Global
 		{1D14966F-DAB3-446D-9C1C-DB2EDE04F0D0} = {160C3F30-1A46-421C-AB27-F6BB6C6FD74F}
 		{3B0158F8-70CD-4DFA-AC29-896FFDD1C1C1} = {A882DCCA-11E7-48E8-B629-B30C78E88AF2}
 		{C63EDE66-D86C-4133-9B63-B1E04BF5A8BE} = {A882DCCA-11E7-48E8-B629-B30C78E88AF2}
-		{1CB86CF4-E776-410C-B5FA-6F7B40AE4F98} = {A882DCCA-11E7-48E8-B629-B30C78E88AF2}
 	EndGlobalSection
 EndGlobal

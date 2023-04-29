@@ -1,7 +1,7 @@
-using Ferdinand.Common.Logging;
-using Ferdinand.Common.Messaging;
-using Ferdinand.Data.EntityFrameworkCore.Repositories;
 using Ferdinand.Domain.Primitives;
+using Ferdinand.Infrastructure.Data.EntityFrameworkCore.Repositories;
+using Ferdinand.Infrastructure.Logging;
+using Ferdinand.Infrastructure.Messaging;
 using MediatR;
 using Newtonsoft.Json;
 

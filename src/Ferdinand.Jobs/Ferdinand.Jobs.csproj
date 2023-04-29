@@ -31,7 +31,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\Ferdinand.Application\Ferdinand.Application.csproj" />
-    <ProjectReference Include="..\Ferdinand.Data\Ferdinand.Data.csproj" />
+    <ProjectReference Include="..\Ferdinand.Infrastructure\Ferdinand.Infrastructure.csproj" />
     <ProjectReference Include="..\Ferdinand.Extensions.Hosting\Ferdinand.Extensions.Hosting.csproj" />
   </ItemGroup>
 

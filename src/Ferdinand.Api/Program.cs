@@ -1,10 +1,10 @@
 using Ferdinand.Api;
 using Ferdinand.Application;
-using Ferdinand.Common.Logging;
-using Ferdinand.Common.Messaging;
-using Ferdinand.Data;
-using Ferdinand.Data.EntityFrameworkCore;
 using Ferdinand.Extensions.Hosting;
+using Ferdinand.Infrastructure;
+using Ferdinand.Infrastructure.EntityFrameworkCore;
+using Ferdinand.Infrastructure.Logging;
+using Ferdinand.Infrastructure.Messaging;
 using Microsoft.AspNetCore.Diagnostics.HealthChecks;
 using Microsoft.AspNetCore.Mvc.Versioning;
 using Serilog;

@@ -1,11 +1,11 @@
 using Bogus;
 using Ferdinand.Application.Commands.PublishOutboxMessage;
-using Ferdinand.Common.Logging;
-using Ferdinand.Common.Messaging;
-using Ferdinand.Data.EntityFrameworkCore;
-using Ferdinand.Data.EntityFrameworkCore.Repositories;
-using Ferdinand.Data.Outbox;
 using Ferdinand.Domain.Events;
+using Ferdinand.Infrastructure.Data.EntityFrameworkCore.Repositories;
+using Ferdinand.Infrastructure.Data.Outbox;
+using Ferdinand.Infrastructure.EntityFrameworkCore;
+using Ferdinand.Infrastructure.Logging;
+using Ferdinand.Infrastructure.Messaging;
 using FluentAssertions;
 using Microsoft.Extensions.DependencyInjection;
 using Newtonsoft.Json;

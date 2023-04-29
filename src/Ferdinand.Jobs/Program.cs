@@ -1,8 +1,8 @@
 ﻿using Ferdinand.Application;
-using Ferdinand.Common.Logging;
-using Ferdinand.Common.Messaging;
-using Ferdinand.Data;
+using Ferdinand.Infrastructure;
 using Ferdinand.Extensions.Hosting;
+using Ferdinand.Infrastructure.Logging;
+using Ferdinand.Infrastructure.Messaging;
 using Ferdinand.Jobs;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;

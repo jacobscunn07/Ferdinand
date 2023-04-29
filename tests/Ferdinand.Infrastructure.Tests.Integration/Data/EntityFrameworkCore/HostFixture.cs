@@ -7,7 +7,7 @@ using Microsoft.Extensions.Hosting;
 using Testcontainers.PostgreSql;
 using Xunit;
 
-namespace Ferdinand.Application.Tests.Integration;
+namespace Ferdinand.Infrastructure.Tests.Integration.Data.EntityFrameworkCore;
 
 public class HostFixture : IAsyncLifetime
 {
@@ -51,7 +51,6 @@ public class HostFixture : IAsyncLifetime
                 services.AddDbContext<FerdinandDbContext>(opts =>
                     opts.UseNpgsql(_dbContainer.GetConnectionString()));
                 services.AddTransient<IColorRepository, ColorRepository>();
-                services.AddTransient<OutboxMessageRepository>();
             })
             .Build();
     }
