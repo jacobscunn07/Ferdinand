@@ -11,7 +11,7 @@ COPY ./src/Ferdinand.Domain.Primitives/Ferdinand.Domain.Primitives.csproj ./src/
 COPY ./src/Ferdinand.Domain/Ferdinand.Domain.csproj ./src/Ferdinand.Domain/Ferdinand.Domain.csproj
 COPY ./src/Ferdinand.Infrastructure/Ferdinand.Infrastructure.csproj ./src/Ferdinand.Infrastructure/Ferdinand.Infrastructure.csproj  
 COPY ./src/Ferdinand.Application/Ferdinand.Application.csproj ./src/Ferdinand.Application/Ferdinand.Application.csproj  
-COPY ./src/Ferdinand.Data.Migrations/Ferdinand.Data.Migrations.csproj ./src/Ferdinand.Data.Migrations/Ferdinand.Data.Migrations.csproj  
+COPY ./src/Ferdinand.DataMigrations/Ferdinand.DataMigrations.csproj ./src/Ferdinand.DataMigrations/Ferdinand.DataMigrations.csproj  
 COPY ./src/Ferdinand.Api/Ferdinand.Api.csproj ./src/Ferdinand.Api/Ferdinand.Api.csproj
 COPY ./src/Ferdinand.Jobs/Ferdinand.Jobs.csproj ./src/Ferdinand.Jobs/Ferdinand.Jobs.csproj
 
@@ -20,7 +20,7 @@ RUN dotnet restore
 COPY . .
 
 RUN dotnet build --no-restore -c "Release" \
-    && dotnet publish --no-build -c "Release" -o /publish/Ferdinand.Data.Migrations /build/src/Ferdinand.Data.Migrations/ \
+    && dotnet publish --no-build -c "Release" -o /publish/Ferdinand.DataMigrations /build/src/Ferdinand.DataMigrations/ \
     && dotnet publish --no-build -c "Release" -o /publish/Ferdinand.Api /build/src/Ferdinand.Api/ \
     && dotnet publish --no-build -c "Release" -o /publish/Ferdinand.Jobs /build/src/Ferdinand.Jobs/
 
@@ -37,8 +37,8 @@ WORKDIR /app/Ferdinand.Jobs
 ENTRYPOINT [ "dotnet", "Ferdinand.Jobs.dll" ]
 
 FROM release as release-migrations
-WORKDIR /app/Ferdinand.Data.Migrations
-ENTRYPOINT [ "dotnet", "Ferdinand.Data.Migrations.dll" ]
+WORKDIR /app/Ferdinand.DataMigrations
+ENTRYPOINT [ "dotnet", "Ferdinand.DataMigrations.dll" ]
 
 FROM build as tests
 ENTRYPOINT [ "/bin/sh", "run_tests.sh" ]

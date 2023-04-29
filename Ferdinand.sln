@@ -13,7 +13,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Ferdinand.Infrastructure", 
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Ferdinand.Application", "src\Ferdinand.Application\Ferdinand.Application.csproj", "{4DF2F207-3820-441D-8C1B-6B5D89D25DF9}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Ferdinand.Data.Migrations", "src\Ferdinand.Data.Migrations\Ferdinand.Data.Migrations.csproj", "{4DA00B9B-740D-4B63-B942-77916CFE2CF6}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Ferdinand.DataMigrations", "src\Ferdinand.DataMigrations\Ferdinand.DataMigrations.csproj", "{4DA00B9B-740D-4B63-B942-77916CFE2CF6}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "tests", "tests", "{160C3F30-1A46-421C-AB27-F6BB6C6FD74F}"
 EndProject
