@@ -11,6 +11,7 @@ COPY ./src/Ferdinand.Domain.Primitives/Ferdinand.Domain.Primitives.csproj ./src/
 COPY ./src/Ferdinand.Domain/Ferdinand.Domain.csproj ./src/Ferdinand.Domain/Ferdinand.Domain.csproj
 COPY ./src/Ferdinand.Data/Ferdinand.Data.csproj ./src/Ferdinand.Data/Ferdinand.Data.csproj  
 COPY ./src/Ferdinand.Application/Ferdinand.Application.csproj ./src/Ferdinand.Application/Ferdinand.Application.csproj  
+COPY ./src/Ferdinand.Common/Ferdinand.Common.csproj ./src/Ferdinand.Common/Ferdinand.Common.csproj
 COPY ./src/Ferdinand.Data.Migrations/Ferdinand.Data.Migrations.csproj ./src/Ferdinand.Data.Migrations/Ferdinand.Data.Migrations.csproj  
 COPY ./src/Ferdinand.Api/Ferdinand.Api.csproj ./src/Ferdinand.Api/Ferdinand.Api.csproj
 COPY ./src/Ferdinand.Jobs/Ferdinand.Jobs.csproj ./src/Ferdinand.Jobs/Ferdinand.Jobs.csproj

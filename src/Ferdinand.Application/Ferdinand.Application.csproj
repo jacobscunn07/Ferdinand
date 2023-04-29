@@ -1,5 +1,6 @@
 <Project Sdk="Microsoft.NET.Sdk">
   <ItemGroup>
+    <ProjectReference Include="..\Ferdinand.Common\Ferdinand.Common.csproj" />
     <ProjectReference Include="..\Ferdinand.Domain.Primitives\Ferdinand.Domain.Primitives.csproj" />
     <ProjectReference Include="..\Ferdinand.Domain\Ferdinand.Domain.csproj" />
     <ProjectReference Include="..\Ferdinand.Data\Ferdinand.Data.csproj" />

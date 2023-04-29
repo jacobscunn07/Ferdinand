@@ -54,6 +54,7 @@ public class HostFixture : IAsyncLifetime
                 services.AddDbContext<FerdinandDbContext>(opts =>
                     opts.UseNpgsql(_dbContainer.GetConnectionString()));
                 services.AddTransient<IColorRepository, ColorRepository>();
+                services.AddTransient<OutboxMessageRepository>();
             })
             .Build();
     }

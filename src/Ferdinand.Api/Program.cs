@@ -1,5 +1,7 @@
 using Ferdinand.Api;
 using Ferdinand.Application;
+using Ferdinand.Common.Logging;
+using Ferdinand.Common.Messaging;
 using Ferdinand.Data;
 using Ferdinand.Data.EntityFrameworkCore;
 using Ferdinand.Extensions.Hosting;
@@ -12,10 +14,12 @@ var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 
+builder.Services.AddTransient(typeof(ILoggerAdapter<>), typeof(LoggerAdapter<>));
 builder.Host.UseSerilog((context, configuration) =>
     configuration.ReadFrom.Configuration(context.Configuration));
 
-builder.Host.ConfigureNServiceBus(typeof(AssemblyMarker).Assembly.GetName().Name);
+builder.Host.ConfigureNServiceBus(typeof(AssemblyMarker).Assembly.GetName().Name!);
+builder.Services.AddSingleton<IMessageBus, NServiceBusMessageBus>();
 
 builder.Services.AddApiVersioning(o =>
 {
