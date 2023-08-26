@@ -1,4 +1,6 @@
 using Ferdinand.Application.Commands.AddColor;
+using Ferdinand.Application.Tests.Integration.Commands.TestUtils;
+using Ferdinand.Application.Tests.Integration.TestUtils.Colors.Extensions;
 using Ferdinand.Domain;
 using Ferdinand.Domain.Models;
 using Ferdinand.Domain.Repositories;
@@ -19,17 +21,13 @@ public class AddColorCommandHandlerTests : IClassFixture<HostFixture>
     }
 
     [Theory]
-    [InlineData("t", "000000", "")]
-    [InlineData("t", "FFFFFF", "white")]
-    public async Task Handle_ShouldAddColor_WhenInvokedWithValidInputs(string tenant, string hexValue, string description)
+    [MemberData(nameof(Handle_ShouldAddColor_WhenInvokedWithValidInputs_TestCases))]
+    public async Task Handle_ShouldAddColor_WhenInvokedWithValidInputs(AddColorCommand command)
     {
         // Arrange
         using var scope = _fixture.Host.Services.CreateScope();
         var ctx = scope.ServiceProvider.GetRequiredService<FerdinandDbContext>();
         var repository = scope.ServiceProvider.GetRequiredService<IColorRepository>();
-
-        var tenantObject = Tenant.Create(tenant);
-        var command = new AddColorCommand(tenantObject.Value, hexValue, description);
         var sut = new AddColorCommandHandler(repository);
 
         // Act
@@ -38,51 +36,44 @@ public class AddColorCommandHandlerTests : IClassFixture<HostFixture>
 
         // Assert
         (await repository.Exists(ColorKey.Create(result.Key))).Should().BeTrue();
-        (await repository.GetByKey(ColorKey.Create(result.Key)))
-            .Should()
-            .BeEquivalentTo(
-                Color.FromHexValue(tenantObject, hexValue, description),
-                config =>
-                    config
-                        .Excluding(c => c.Key)
-                        .ComparingByMembers<Color>()
-            );
+        (await repository.GetByKey(ColorKey.Create(result.Key))).ValidateCreatedFrom(command);
     }
-    
-    [Fact]
-    public void Handle_ShouldThrow_WhenInvokedWithInvalidInputs()
+
+    public static IEnumerable<object[]> Handle_ShouldAddColor_WhenInvokedWithValidInputs_TestCases()
+    {
+        yield return new[] { AddColorCommandUtils.CreateCommand() };
+        yield return new[] { AddColorCommandUtils.CreateCommand(tenant: "ABC", description: "") };
+    }
+
+    [Theory]
+    [MemberData(nameof(Handle_ShouldThrow_WhenInvokedWithInvalidInputs_TestCases))]
+    public void Handle_ShouldThrow_WhenInvokedWithInvalidInputs(AddColorCommand command)
     {
         // Arrange
         using var scope = _fixture.Host.Services.CreateScope();
         var repository = scope.ServiceProvider.GetRequiredService<IColorRepository>();
-
-        var tenant = "t";
-        var hexValue = "FFFFFFF";
-        var description = "white";
-        var tenantObject = Tenant.Create(tenant);
-        var command = new AddColorCommand(tenantObject.Value, hexValue, description);
-        var handler = new AddColorCommandHandler(repository);
+        var sut = new AddColorCommandHandler(repository);
 
         // Act
-        var action = async () => await handler.Handle(command, new CancellationToken());
+        var action = async () => await sut.Handle(command, new CancellationToken());
 
         // Assert
         action.Should().ThrowAsync<DomainException>();
     }
-    
-    [Fact]
-    public async Task Handle_ShouldThrow_WhenColorAlreadyExists()
+
+    public static IEnumerable<object[]> Handle_ShouldThrow_WhenInvokedWithInvalidInputs_TestCases()
+    {
+        yield return new[] { AddColorCommandUtils.CreateCommand(hexValue: "FFFFFFF") };
+    }
+
+    [Theory]
+    [MemberData(nameof(Handle_ShouldThrow_WhenColorAlreadyExists_TestCases))]
+    public async Task Handle_ShouldThrow_WhenColorAlreadyExists(AddColorCommand command)
     {
         // Arrange
         using var scope = _fixture.Host.Services.CreateScope();
         var ctx = scope.ServiceProvider.GetRequiredService<FerdinandDbContext>();
         var repository = scope.ServiceProvider.GetRequiredService<IColorRepository>();
-    
-        var tenant = "t";
-        var hexValue = "111111";
-        var description = "white";
-        var tenantObject = Tenant.Create(tenant);
-        var command = new AddColorCommand(tenantObject.Value, hexValue, description);
         var sut = new AddColorCommandHandler(repository);
         var ct = new CancellationToken();
     
@@ -98,5 +89,10 @@ public class AddColorCommandHandlerTests : IClassFixture<HostFixture>
     
         // Assert
         await action.Should().ThrowAsync<Exception>();
+    }
+    
+    public static IEnumerable<object[]> Handle_ShouldThrow_WhenColorAlreadyExists_TestCases()
+    {
+        yield return new[] { AddColorCommandUtils.CreateCommand(hexValue: "111111") };
     }
 }
