@@ -2,6 +2,7 @@ using Ferdinand.Api;
 using Ferdinand.Application;
 using Ferdinand.Extensions.Hosting;
 using Ferdinand.Infrastructure;
+using Ferdinand.Infrastructure.Configuration;
 using Ferdinand.Infrastructure.EntityFrameworkCore;
 using Ferdinand.Infrastructure.Logging;
 using Ferdinand.Infrastructure.Messaging;
@@ -39,6 +40,9 @@ builder.Services.AddVersionedApiExplorer(
 builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
+
+builder.Services.Configure<ConnectionStringOptions>(
+    builder.Configuration.GetSection(ConnectionStringOptions.Position));
 
 builder.Services
     .AddDataServices(builder.Configuration)
