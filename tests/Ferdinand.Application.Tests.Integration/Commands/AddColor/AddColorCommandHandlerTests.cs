@@ -3,10 +3,7 @@ using Ferdinand.Application.Tests.Integration.Commands.TestUtils;
 using Ferdinand.Application.Tests.Integration.TestUtils.Colors.Extensions;
 using Ferdinand.Domain;
 using Ferdinand.Domain.Models;
-using Ferdinand.Domain.Repositories;
-using Ferdinand.Infrastructure.EntityFrameworkCore;
 using FluentAssertions;
-using Microsoft.Extensions.DependencyInjection;
 using Xunit;
 
 namespace Ferdinand.Application.Tests.Integration.Commands.AddColor;
@@ -25,18 +22,15 @@ public class AddColorCommandHandlerTests : IClassFixture<HostFixture>
     public async Task Handle_ShouldAddColor_WhenInvokedWithValidInputs(AddColorCommand command)
     {
         // Arrange
-        using var scope = _fixture.Host.Services.CreateScope();
-        var ctx = scope.ServiceProvider.GetRequiredService<FerdinandDbContext>();
-        var repository = scope.ServiceProvider.GetRequiredService<IColorRepository>();
-        var sut = new AddColorCommandHandler(repository);
+        var sut = new AddColorCommandHandler(_fixture.ColorRepository);
 
         // Act
         var result = await sut.Handle(command, new CancellationToken());
-        await ctx.SaveChangesAsync();
+        await _fixture.FerdinandDbContext.SaveChangesAsync();
 
         // Assert
-        (await repository.Exists(ColorKey.Create(result.Key))).Should().BeTrue();
-        (await repository.GetByKey(ColorKey.Create(result.Key))).ValidateCreatedFrom(command);
+        (await _fixture.ColorRepository.Exists(ColorKey.Create(result.Key))).Should().BeTrue();
+        (await _fixture.ColorRepository.GetByKey(ColorKey.Create(result.Key))).ValidateCreatedFrom(command);
     }
 
     public static IEnumerable<object[]> Handle_ShouldAddColor_WhenInvokedWithValidInputs_TestCases()
@@ -50,9 +44,7 @@ public class AddColorCommandHandlerTests : IClassFixture<HostFixture>
     public void Handle_ShouldThrow_WhenInvokedWithInvalidInputs(AddColorCommand command)
     {
         // Arrange
-        using var scope = _fixture.Host.Services.CreateScope();
-        var repository = scope.ServiceProvider.GetRequiredService<IColorRepository>();
-        var sut = new AddColorCommandHandler(repository);
+        var sut = new AddColorCommandHandler(_fixture.ColorRepository);
 
         // Act
         var action = async () => await sut.Handle(command, new CancellationToken());
@@ -71,20 +63,17 @@ public class AddColorCommandHandlerTests : IClassFixture<HostFixture>
     public async Task Handle_ShouldThrow_WhenColorAlreadyExists(AddColorCommand command)
     {
         // Arrange
-        using var scope = _fixture.Host.Services.CreateScope();
-        var ctx = scope.ServiceProvider.GetRequiredService<FerdinandDbContext>();
-        var repository = scope.ServiceProvider.GetRequiredService<IColorRepository>();
-        var sut = new AddColorCommandHandler(repository);
+        var sut = new AddColorCommandHandler(_fixture.ColorRepository);
         var ct = new CancellationToken();
     
         _ = sut.Handle(command, ct);
-        await ctx.SaveChangesAsync(ct);
+        await _fixture.FerdinandDbContext.SaveChangesAsync(ct);
     
         // Act
         var action = async () =>
         {
             await sut.Handle(command, ct);
-            await ctx.SaveChangesAsync(ct);
+            await _fixture.FerdinandDbContext.SaveChangesAsync(ct);
         };
     
         // Assert

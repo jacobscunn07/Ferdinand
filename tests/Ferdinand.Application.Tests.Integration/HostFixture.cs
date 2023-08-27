@@ -13,7 +13,13 @@ public class HostFixture : IAsyncLifetime
 {
     public IHost Host { get; private set; } = null!;
 
+    private IServiceScope _scope;
+
     private readonly PostgreSqlContainer _dbContainer;
+
+    public FerdinandDbContext FerdinandDbContext => _scope.ServiceProvider.GetRequiredService<FerdinandDbContext>();
+
+    public IColorRepository ColorRepository => _scope.ServiceProvider.GetRequiredService<IColorRepository>();
 
     public HostFixture()
     {
@@ -54,6 +60,8 @@ public class HostFixture : IAsyncLifetime
                 services.AddTransient<OutboxMessageRepository>();
             })
             .Build();
+
+        _scope = Host.Services.CreateScope();
     }
 
     private async Task ExecuteDatabaseMigrations()
