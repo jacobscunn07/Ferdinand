@@ -2,7 +2,6 @@ using Ferdinand.Domain.Primitives;
 using Ferdinand.Infrastructure.Data.Outbox;
 using Ferdinand.Infrastructure.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Diagnostics;
-using Newtonsoft.Json;
 
 namespace Ferdinand.Infrastructure.Data.EntityFrameworkCore.Interceptors;
 
@@ -18,17 +17,7 @@ public class ConvertDomainEventsToOutboxMessagesInterceptor : SaveChangesInterce
             .Entries<IHandleDomainEvents>()
             .Select(x => x.Entity)
             .SelectMany(x => x.Events)
-            .Select(x => new OutboxMessage()
-                {
-                    Id = Guid.NewGuid(),
-                    CreatedUtc = DateTime.UtcNow,
-                    Type = x.GetType().Name,
-                    Content = JsonConvert.SerializeObject(x, new JsonSerializerSettings()
-                    {
-                        TypeNameHandling = TypeNameHandling.All
-                    })
-                }
-            )
+            .Select(x => x.MapToOutboxMessage())
             .ToList();
         
         ctx.OutboxMessages.AddRange(outboxMessages);

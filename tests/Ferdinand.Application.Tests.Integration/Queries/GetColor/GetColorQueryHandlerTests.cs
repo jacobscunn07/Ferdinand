@@ -1,9 +1,8 @@
 using Ferdinand.Application.Queries.GetColor;
+using Ferdinand.Application.Tests.Integration.Queries.TestUtils;
+using Ferdinand.Application.Tests.Integration.TestUtils.Constants;
 using Ferdinand.Domain.Models;
-using Ferdinand.Domain.Repositories;
-using Ferdinand.Infrastructure.EntityFrameworkCore;
 using FluentAssertions;
-using Microsoft.Extensions.DependencyInjection;
 using Throw;
 using Xunit;
 using Color = Ferdinand.Domain.Models.Color;
@@ -19,23 +18,16 @@ public class GetColorQueryHandlerTests : IClassFixture<HostFixture>
         _fixture = fixture;
     }
 
-    [Fact]
-    public async Task Handle_ShouldGetColor_WhenColorExistsWithKey()
+    [Theory]
+    [MemberData(nameof(Handle_ShouldGetColor_WhenColorExistsWithKey_TestCases))]
+    public async Task Handle_ShouldGetColor_WhenColorExistsWithKey(Tenant tenant, string hexValue)
     {
         // Arrange
-        using var scope = _fixture.Host.Services.CreateScope();
-        var ctx = scope.ServiceProvider.GetRequiredService<FerdinandDbContext>();
-        var repository = scope.ServiceProvider.GetRequiredService<IColorRepository>();
-
-        var tenant = Tenant.Create("tenant");
-        var hexValue = "000000";
         var color = Color.FromHexValue(tenant, hexValue);
-
-        await repository.Add(color);
-        await ctx.SaveChangesAsync();
-
-        var query = new GetColorQuery(color.Key.Value);
-        var sut = new GetColorQueryHandler(repository);
+        await _fixture.ColorRepository.Add(color);
+        await _fixture.FerdinandDbContext.SaveChangesAsync();
+        var query = GetColorQueryUtils.CreateCommand(color.Key.Value);
+        var sut = new GetColorQueryHandler(_fixture.ColorRepository);
 
         // Act
         var result = await sut.Handle(query, new CancellationToken());
@@ -46,15 +38,18 @@ public class GetColorQueryHandlerTests : IClassFixture<HostFixture>
         result.Color.HexValue.Should().Be(color.HexValue);
         result.Color.Description.Should().BeEquivalentTo(color.Description);
     }
+
+    public static IEnumerable<object[]> Handle_ShouldGetColor_WhenColorExistsWithKey_TestCases()
+    {
+        yield return new object[] { Tenant.Create(Constants.Tenant.Name), Constants.Color.HexValue };
+    }
     
-    [Fact]
-    public Task Handle_ShouldThrow_WhenColorDoesNotExistWithKey()
+    [Theory]
+    [MemberData(nameof(Handle_ShouldThrow_WhenColorDoesNotExistWithKey_TestCases))]
+    public Task Handle_ShouldThrow_WhenColorDoesNotExistWithKey(GetColorQuery query)
     {
         // Arrange
-        using var scope = _fixture.Host.Services.CreateScope();
-        var repository = scope.ServiceProvider.GetRequiredService<IColorRepository>();
-        var query = new GetColorQuery(Guid.NewGuid());
-        var sut = new GetColorQueryHandler(repository);
+        var sut = new GetColorQueryHandler(_fixture.ColorRepository);
 
         // Act
         var action = async () => await sut.Handle(query, new CancellationToken());
@@ -63,5 +58,10 @@ public class GetColorQueryHandlerTests : IClassFixture<HostFixture>
         action.Should().Throw();
         
         return Task.CompletedTask;
+    }
+    
+    public static IEnumerable<object[]> Handle_ShouldThrow_WhenColorDoesNotExistWithKey_TestCases()
+    {
+        yield return new object[] { GetColorQueryUtils.CreateCommand(Guid.NewGuid()) };
     }
 }

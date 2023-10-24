@@ -21,6 +21,8 @@ public class HostFixture : IAsyncLifetime
 
     public IColorRepository ColorRepository => _scope.ServiceProvider.GetRequiredService<IColorRepository>();
 
+    public OutboxMessageRepository OutboxMessageRepository => _scope.ServiceProvider.GetRequiredService<OutboxMessageRepository>();
+
     public HostFixture()
     {
         _dbContainer = new PostgreSqlBuilder()

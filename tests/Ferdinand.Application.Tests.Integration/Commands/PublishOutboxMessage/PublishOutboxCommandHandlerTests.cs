@@ -1,14 +1,9 @@
-using Bogus;
 using Ferdinand.Application.Commands.PublishOutboxMessage;
-using Ferdinand.Domain.Events;
-using Ferdinand.Infrastructure.Data.EntityFrameworkCore.Repositories;
+using Ferdinand.Application.Tests.Integration.Commands.TestUtils;
 using Ferdinand.Infrastructure.Data.Outbox;
-using Ferdinand.Infrastructure.EntityFrameworkCore;
 using Ferdinand.Infrastructure.Logging;
 using Ferdinand.Infrastructure.Messaging;
 using FluentAssertions;
-using Microsoft.Extensions.DependencyInjection;
-using Newtonsoft.Json;
 using NSubstitute;
 using Xunit;
 
@@ -23,48 +18,37 @@ public class PublishOutboxCommandHandlerTests : IClassFixture<HostFixture>
         _fixture = fixture;
     }
 
-    [Fact]
-    public async Task Handle_ShouldPublishOutboxMessages_WhenMessagesExist()
+    [Theory]
+    [MemberData(nameof(Handle_ShouldPublishOutboxMessages_WhenMessagesExist_TestCases))]
+    public async Task Handle_ShouldPublishOutboxMessages_WhenMessagesExist(
+        PublishOutboxMessageCommand command,
+        OutboxMessage outboxMessage)
     {
         // Arrange
-        using var scope = _fixture.Host.Services.CreateScope();
-        var ctx = scope.ServiceProvider.GetRequiredService<FerdinandDbContext>();
-        var messageRepository = scope.ServiceProvider.GetRequiredService<OutboxMessageRepository>();
-        var outboxMessage = GetOutboxMessage();
-        await messageRepository.AddRange(new[] { outboxMessage });
-        await ctx.SaveChangesAsync();
+        await _fixture.OutboxMessageRepository.AddRange(new[] { outboxMessage });
+        await _fixture.FerdinandDbContext.SaveChangesAsync();
         var logger = Substitute.For<ILoggerAdapter<PublishOutboxMessageCommandHandler>>();
         var bus = Substitute.For<IMessageBus>();
         bus.Publish(Arg.Any<object>()).Returns(Task.CompletedTask);
-        var command = new PublishOutboxMessageCommand();
         var cancellationToken = new CancellationToken();
-        var sut = new PublishOutboxMessageCommandHandler(messageRepository, bus, logger);
+        var sut = new PublishOutboxMessageCommandHandler(_fixture.OutboxMessageRepository, bus, logger);
 
         // Act
         await sut.Handle(command, cancellationToken);
-        await ctx.SaveChangesAsync(cancellationToken);
+        await _fixture.FerdinandDbContext.SaveChangesAsync(cancellationToken);
 
         // Assert
         await bus.Received(1).Publish(Arg.Any<object>());
         logger.Received(1).LogInformation(Arg.Any<string?>(), Arg.Any<object?[]>());
-        (messageRepository.GetAll().SingleOrDefault(x => x.Id == outboxMessage.Id))?.ProcessedUtc.Should().NotBeNull();
+        (_fixture.OutboxMessageRepository.GetAll().SingleOrDefault(x => x.Id == outboxMessage.Id))?.ProcessedUtc.Should().NotBeNull();
     }
-
-    private static OutboxMessage GetOutboxMessage()
+    
+    public static IEnumerable<object[]> Handle_ShouldPublishOutboxMessages_WhenMessagesExist_TestCases()
     {
-        var domainEvent = new ColorAdded(
-            new Faker().Company.CompanyName(),
-            new Randomizer().Hexadecimal(6, ""));
-        var outboxMessage = new OutboxMessage()
+        yield return new object[]
         {
-            Id = Guid.NewGuid(),
-            CreatedUtc = DateTime.UtcNow,
-            Type = domainEvent.GetType().Name,
-            Content = JsonConvert.SerializeObject(domainEvent, new JsonSerializerSettings()
-            {
-                TypeNameHandling = TypeNameHandling.All
-            })
+            PublishOutboxMessageCommandUtils.CreateCommand(),
+            PublishOutboxMessageCommandUtils.CreateOutboxMessage()
         };
-        return outboxMessage;
     }
 }
