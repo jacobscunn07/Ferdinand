@@ -1,8 +1,9 @@
 using Ferdinand.Application.Commands.AddColor;
-using Ferdinand.Application.Tests.Integration.Commands.TestUtils;
-using Ferdinand.Application.Tests.Integration.TestUtils.Colors.Extensions;
 using Ferdinand.Domain;
 using Ferdinand.Domain.Models;
+using Ferdinand.Testing;
+using Ferdinand.Testing.Commands;
+using Ferdinand.Testing.Extensions;
 using FluentAssertions;
 using Xunit;
 
@@ -35,8 +36,8 @@ public class AddColorCommandHandlerTests : IClassFixture<HostFixture>
 
     public static IEnumerable<object[]> Handle_ShouldAddColor_WhenInvokedWithValidInputs_TestCases()
     {
-        yield return new[] { AddColorCommandUtils.CreateCommand() };
-        yield return new[] { AddColorCommandUtils.CreateCommand(tenant: "ABC", description: "") };
+        yield return new[] { AddColorCommandBuilder.CreateCommand() };
+        yield return new[] { AddColorCommandBuilder.CreateCommand(tenant: "ABC", description: "") };
     }
 
     [Theory]
@@ -55,7 +56,7 @@ public class AddColorCommandHandlerTests : IClassFixture<HostFixture>
 
     public static IEnumerable<object[]> Handle_ShouldThrow_WhenInvokedWithInvalidInputs_TestCases()
     {
-        yield return new[] { AddColorCommandUtils.CreateCommand(hexValue: "FFFFFFF") };
+        yield return new[] { AddColorCommandBuilder.CreateCommand(hexValue: "FFFFFFF") };
     }
 
     [Theory]
@@ -82,6 +83,6 @@ public class AddColorCommandHandlerTests : IClassFixture<HostFixture>
     
     public static IEnumerable<object[]> Handle_ShouldThrow_WhenColorAlreadyExists_TestCases()
     {
-        yield return new[] { AddColorCommandUtils.CreateCommand(hexValue: "111111") };
+        yield return new[] { AddColorCommandBuilder.CreateCommand(hexValue: "111111") };
     }
 }

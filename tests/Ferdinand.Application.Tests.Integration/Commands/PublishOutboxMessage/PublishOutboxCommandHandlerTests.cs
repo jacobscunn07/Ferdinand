@@ -1,8 +1,9 @@
 using Ferdinand.Application.Commands.PublishOutboxMessage;
-using Ferdinand.Application.Tests.Integration.Commands.TestUtils;
 using Ferdinand.Infrastructure.Data.Outbox;
 using Ferdinand.Infrastructure.Logging;
 using Ferdinand.Infrastructure.Messaging;
+using Ferdinand.Testing;
+using Ferdinand.Testing.Commands;
 using FluentAssertions;
 using NSubstitute;
 using Xunit;
@@ -47,8 +48,8 @@ public class PublishOutboxCommandHandlerTests : IClassFixture<HostFixture>
     {
         yield return new object[]
         {
-            PublishOutboxMessageCommandUtils.CreateCommand(),
-            PublishOutboxMessageCommandUtils.CreateOutboxMessage()
+            PublishOutboxMessageCommandBuilder.CreateCommand(),
+            PublishOutboxMessageCommandBuilder.CreateOutboxMessage()
         };
     }
 }

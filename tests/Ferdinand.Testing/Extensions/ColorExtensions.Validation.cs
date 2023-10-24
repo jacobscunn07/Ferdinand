@@ -2,9 +2,9 @@ using Ferdinand.Application.Commands.AddColor;
 using Ferdinand.Domain.Models;
 using FluentAssertions;
 
-namespace Ferdinand.Application.Tests.Integration.TestUtils.Colors.Extensions;
+namespace Ferdinand.Testing.Extensions;
 
-public static partial class ColorExtensions
+public static class ColorExtensions
 {
     public static void ValidateCreatedFrom(this Color color, AddColorCommand command)
     {

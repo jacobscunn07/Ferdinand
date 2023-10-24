@@ -1,12 +1,11 @@
 using Ferdinand.Application.Commands.PublishOutboxMessage;
-using Ferdinand.Application.Tests.Integration.TestUtils.Constants;
 using Ferdinand.Domain.Events;
 using Ferdinand.Domain.Primitives;
 using Ferdinand.Infrastructure.Data.Outbox;
 
-namespace Ferdinand.Application.Tests.Integration.Commands.TestUtils;
+namespace Ferdinand.Testing.Commands;
 
-public static class PublishOutboxMessageCommandUtils
+public static class PublishOutboxMessageCommandBuilder
 {
     public static PublishOutboxMessageCommand CreateCommand() => new();
 
@@ -15,7 +14,7 @@ public static class PublishOutboxMessageCommandUtils
     {
         domainEvent ??= new ColorAdded(
             Constants.Tenant.Name,
-            Constants.Color.HexValue);
+            Constants.Color.HexValue.Black);
 
         return domainEvent.MapToOutboxMessage();
     }

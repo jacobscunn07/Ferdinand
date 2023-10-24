@@ -1,11 +1,11 @@
 using Ferdinand.Application.Queries.GetColor;
-using Ferdinand.Application.Tests.Integration.Queries.TestUtils;
-using Ferdinand.Application.Tests.Integration.TestUtils.Constants;
-using Ferdinand.Domain.Models;
+using Ferdinand.Testing;
+using Ferdinand.Testing.Queries;
 using FluentAssertions;
 using Throw;
 using Xunit;
 using Color = Ferdinand.Domain.Models.Color;
+using Tenant = Ferdinand.Domain.Models.Tenant;
 
 namespace Ferdinand.Application.Tests.Integration.Queries.GetColor;
 
@@ -26,7 +26,7 @@ public class GetColorQueryHandlerTests : IClassFixture<HostFixture>
         var color = Color.FromHexValue(tenant, hexValue);
         await _fixture.ColorRepository.Add(color);
         await _fixture.FerdinandDbContext.SaveChangesAsync();
-        var query = GetColorQueryUtils.CreateCommand(color.Key.Value);
+        var query = GetColorQueryBuilder.CreateQuery(color.Key.Value);
         var sut = new GetColorQueryHandler(_fixture.ColorRepository);
 
         // Act
@@ -41,7 +41,7 @@ public class GetColorQueryHandlerTests : IClassFixture<HostFixture>
 
     public static IEnumerable<object[]> Handle_ShouldGetColor_WhenColorExistsWithKey_TestCases()
     {
-        yield return new object[] { Tenant.Create(Constants.Tenant.Name), Constants.Color.HexValue };
+        yield return new object[] { Tenant.Create(Testing.Constants.Tenant.Name), Testing.Constants.Color.HexValue.Black };
     }
     
     [Theory]
@@ -62,6 +62,6 @@ public class GetColorQueryHandlerTests : IClassFixture<HostFixture>
     
     public static IEnumerable<object[]> Handle_ShouldThrow_WhenColorDoesNotExistWithKey_TestCases()
     {
-        yield return new object[] { GetColorQueryUtils.CreateCommand(Guid.NewGuid()) };
+        yield return new object[] { GetColorQueryBuilder.CreateQuery(Guid.NewGuid()) };
     }
 }

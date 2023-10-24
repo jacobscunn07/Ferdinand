@@ -1,9 +1,8 @@
 using Ferdinand.Application.Commands.AddColor;
-using Ferdinand.Application.Tests.Integration.TestUtils.Constants;
 
-namespace Ferdinand.Application.Tests.Integration.Commands.TestUtils;
+namespace Ferdinand.Testing.Commands;
 
-public static class AddColorCommandUtils
+public static class AddColorCommandBuilder
 {
     public static AddColorCommand CreateCommand(
         string? tenant = null,
@@ -11,6 +10,6 @@ public static class AddColorCommandUtils
         string? description = null) =>
         new(
             tenant ?? Constants.Tenant.Name,
-            hexValue ?? Constants.Color.HexValue,
+            hexValue ?? Constants.Color.HexValue.Black,
             description ?? Constants.Color.Description);
 }

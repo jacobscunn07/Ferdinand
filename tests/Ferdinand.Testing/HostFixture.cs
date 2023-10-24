@@ -7,7 +7,7 @@ using Microsoft.Extensions.Hosting;
 using Testcontainers.PostgreSql;
 using Xunit;
 
-namespace Ferdinand.Application.Tests.Integration;
+namespace Ferdinand.Testing;
 
 public class HostFixture : IAsyncLifetime
 {
