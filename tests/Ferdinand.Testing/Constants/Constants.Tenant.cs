@@ -1,6 +1,9 @@
-namespace Ferdinand.Testing.Constants;
+namespace Ferdinand.Testing;
 
-public static class Tenant
+public static partial class Constants
 {
-    public const string Name = "Tenant";
+    public static class Tenant
+    {
+        public static readonly Domain.Models.Tenant Name = Domain.Models.Tenant.Create("Tenant");
+    }
 }

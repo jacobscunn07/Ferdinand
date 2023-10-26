@@ -3,7 +3,7 @@ using Ferdinand.Infrastructure.Data.Outbox;
 using Ferdinand.Infrastructure.Logging;
 using Ferdinand.Infrastructure.Messaging;
 using Ferdinand.Testing;
-using Ferdinand.Testing.Commands;
+using Ferdinand.Testing.Builders;
 using FluentAssertions;
 using NSubstitute;
 using Xunit;

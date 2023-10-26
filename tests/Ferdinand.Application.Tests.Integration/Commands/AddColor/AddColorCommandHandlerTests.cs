@@ -2,7 +2,7 @@ using Ferdinand.Application.Commands.AddColor;
 using Ferdinand.Domain;
 using Ferdinand.Domain.Models;
 using Ferdinand.Testing;
-using Ferdinand.Testing.Commands;
+using Ferdinand.Testing.Builders;
 using Ferdinand.Testing.Extensions;
 using FluentAssertions;
 using Xunit;
@@ -36,13 +36,13 @@ public class AddColorCommandHandlerTests : IClassFixture<HostFixture>
 
     public static IEnumerable<object[]> Handle_ShouldAddColor_WhenInvokedWithValidInputs_TestCases()
     {
-        yield return new[] { AddColorCommandBuilder.CreateCommand() };
-        yield return new[] { AddColorCommandBuilder.CreateCommand(tenant: "ABC", description: "") };
+        yield return new object[] { AddColorCommandBuilder.CreateCommand() };
+        yield return new object[] { AddColorCommandBuilder.CreateCommand(tenant: "ABC", description: "") };
     }
 
     [Theory]
     [MemberData(nameof(Handle_ShouldThrow_WhenInvokedWithInvalidInputs_TestCases))]
-    public void Handle_ShouldThrow_WhenInvokedWithInvalidInputs(AddColorCommand command)
+    public async Task Handle_ShouldThrow_WhenInvokedWithInvalidInputs(AddColorCommand command)
     {
         // Arrange
         var sut = new AddColorCommandHandler(_fixture.ColorRepository);
@@ -51,12 +51,17 @@ public class AddColorCommandHandlerTests : IClassFixture<HostFixture>
         var action = async () => await sut.Handle(command, new CancellationToken());
 
         // Assert
-        action.Should().ThrowAsync<DomainException>();
+        await action.Should().ThrowAsync<DomainException>();
     }
 
     public static IEnumerable<object[]> Handle_ShouldThrow_WhenInvokedWithInvalidInputs_TestCases()
     {
-        yield return new[] { AddColorCommandBuilder.CreateCommand(hexValue: "FFFFFFF") };
+        yield return new object[]
+        {
+            AddColorCommandBuilder.CreateCommand(
+                tenant: Constants.Tenant.Name.Value,
+                hexValue: Constants.Color.HexValue.Invalid)
+        };
     }
 
     [Theory]
@@ -83,6 +88,6 @@ public class AddColorCommandHandlerTests : IClassFixture<HostFixture>
     
     public static IEnumerable<object[]> Handle_ShouldThrow_WhenColorAlreadyExists_TestCases()
     {
-        yield return new[] { AddColorCommandBuilder.CreateCommand(hexValue: "111111") };
+        yield return new object[] { AddColorCommandBuilder.CreateCommand(hexValue: Constants.Color.HexValue.Blue) };
     }
 }

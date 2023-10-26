@@ -1,6 +1,6 @@
 using Ferdinand.Application.Queries.GetColor;
 using Ferdinand.Testing;
-using Ferdinand.Testing.Queries;
+using Ferdinand.Testing.Builders;
 using FluentAssertions;
 using Throw;
 using Xunit;
@@ -41,7 +41,7 @@ public class GetColorQueryHandlerTests : IClassFixture<HostFixture>
 
     public static IEnumerable<object[]> Handle_ShouldGetColor_WhenColorExistsWithKey_TestCases()
     {
-        yield return new object[] { Tenant.Create(Testing.Constants.Tenant.Name), Testing.Constants.Color.HexValue.Black };
+        yield return new object[] { Constants.Tenant.Name, Constants.Color.HexValue.Black };
     }
     
     [Theory]

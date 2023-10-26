@@ -1,6 +1,6 @@
 using Ferdinand.Application.Queries.GetColor;
 
-namespace Ferdinand.Testing.Queries;
+namespace Ferdinand.Testing.Builders;
 
 public static class GetColorQueryBuilder
 {
