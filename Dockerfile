@@ -3,6 +3,7 @@ FROM mcr.microsoft.com/dotnet/sdk:7.0.101-alpine3.17 AS build
 WORKDIR /build
 
 COPY ./Ferdinand.sln .
+COPY ./tests/Ferdinand.Testing/Ferdinand.Testing.csproj ./tests/Ferdinand.Testing/Ferdinand.Testing.csproj
 COPY ./tests/Ferdinand.Application.Tests.Integration/Ferdinand.Application.Tests.Integration.csproj ./tests/Ferdinand.Application.Tests.Integration/Ferdinand.Application.Tests.Integration.csproj
 COPY ./tests/Ferdinand.Infrastructure.Tests.Integration/Ferdinand.Infrastructure.Tests.Integration.csproj ./tests/Ferdinand.Infrastructure.Tests.Integration/Ferdinand.Infrastructure.Tests.Integration.csproj
 COPY ./tests/Ferdinand.Domain.Tests.Unit/Ferdinand.Domain.Tests.Unit.csproj ./tests/Ferdinand.Domain.Tests.Unit/Ferdinand.Domain.Tests.Unit.csproj
